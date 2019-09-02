@@ -1,14 +1,15 @@
-<div class="top-header hue">
+<div class="top-header">
 		<div class="container">
 			<div class="top-header-main">
 				<div class="col-md-6 top-header-left">
 				</div>
 				<div class="col-md-6 top-header-left">
 					<div class="cart box_1">
-						<a href="checkout.html">
+						<a href="<?php echo base_url() ?>cart">
 							 <div class="total">
-								<span class="">0</span></div>
-								0000<img src="<?php echo base_url() ?>assets/images/cart-1.png" alt="" />
+                <span>0</span>
+              </div>
+							<img src="<?php echo base_url() ?>assets/images/cart-1.png" alt="" />
 						</a>
 						<!-- <p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p> -->
 						<div class="clearfix"> </div>
@@ -18,75 +19,30 @@
 			</div>
 		</div>
 	</div>
-	<!--top-header-->
-	<!--start-logo-->
 	<div class="logo">
-		<a href="index.html"><h1>Olin Store</h1></a>
+		<a href="<?php echo base_url() ?>"><h1 class="hue">Olin Store</h1></a>
 	</div>
-	<!--start-logo-->
-	<!--bottom-header-->
 	<div class="header-bottom">
 		<div class="container">
 			<div class="header">
-				<div class="col-md-9 header-left">
+				<div class="col-md-10 header-left">
 				<div class="top-nav">
-					<ul class="memenu skyblue"><li class="active"><a href="index.html">Home</a></li>
-						<li class="grid"><a href="#">Men</a>
-							<div class="mepanel">
-								<div class="row">
-									<div class="col1 me-one">
-										<h4>Shop</h4>
-										<ul>
-											<li><a href="products.html">New Arrivals</a></li>
-											<li><a href="products.html">Blazers</a></li>
-											<li><a href="products.html">Swem Wear</a></li>
-											<li><a href="products.html">Accessories</a></li>
-											<li><a href="products.html">Handbags</a></li>
-											<li><a href="products.html">T-Shirts</a></li>
-											<li><a href="products.html">Watches</a></li>
-											<li><a href="products.html">My Shopping Bag</a></li>
-										</ul>
-									</div>
-									<div class="col1 me-one">
-										<h4>Style Zone</h4>
-										<ul>
-											<li><a href="products.html">Shoes</a></li>
-											<li><a href="products.html">Watches</a></li>
-											<li><a href="products.html">Brands</a></li>
-											<li><a href="products.html">Coats</a></li>
-											<li><a href="products.html">Accessories</a></li>
-											<li><a href="products.html">Trousers</a></li>
-										</ul>	
-									</div>
-									<div class="col1 me-one">
-										<h4>Popular Brands</h4>
-										<ul>
-											<li><a href="products.html">499 Store</a></li>
-											<li><a href="products.html">Fastrack</a></li>
-											<li><a href="products.html">Casio</a></li>
-											<li><a href="products.html">Fossil</a></li>
-											<li><a href="products.html">Maxima</a></li>
-											<li><a href="products.html">Timex</a></li>
-											<li><a href="products.html">TomTom</a></li>
-											<li><a href="products.html">Titan</a></li>
-										</ul>		
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="grid"><a href="typo.html">Blog</a>
-						</li>
-						<li class="grid"><a href="contact.html">Contact</a>
-						</li>
+					<ul class="memenu skyblue">
+            <li class="active"><a href="<?php echo base_url()?>">Home</a></li>
+						<li class="grid"><a href="<?php echo base_url()?>produk">Produk</a></li>
+						<li class="grid"><a href="<?php echo base_url()?>profil">Profile</a></li>
+						<li class="grid"><a href="<?php echo base_url()?>kontak">Contact</a></li>
 					</ul>
 				</div>
 				<div class="clearfix"> </div>
 			</div>
-			<div class="col-md-3 header-right"> 
-				<!-- <div class="search-bar">
-					<input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
-					<input type="submit" value="">
-				</div> -->
+			<div class="col-md-2 header-right"> 
+      <div class="top-nav">
+					<ul class="memenu skyblue">
+						<!-- <li class="grid"><a href="<?php echo base_url()?>kontak"><i class="fa fa-shopping-cart"></i> Cart</a></li> -->
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
 			</div>
 			<div class="clearfix"> </div>
 			</div>

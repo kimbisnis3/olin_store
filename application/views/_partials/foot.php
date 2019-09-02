@@ -44,7 +44,7 @@
 	</div>
 	<!--information-end-->
 	<!--footer-starts-->
-	<div class="footer">
+	<!-- <div class="footer">
 		<div class="container">
 			<div class="footer-top">
 				<div class="col-md-6 footer-left">
@@ -59,5 +59,5 @@
 				<div class="clearfix"></div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!--footer-end-->	
