@@ -4,7 +4,7 @@
 <body class="fadeIn animated"> 
 	<?php $this->load->view('_partials/topbar.php'); ?>
 	<!--banner-starts-->
-	<div class="bnr" id="home">
+	<!-- <div class="bnr" id="home">
 		<div  id="top" class="callbacks_container">
 			<ul class="rslides" id="slider4">
 			    <li>
@@ -19,7 +19,7 @@
 			</ul>
 		</div>
 		<div class="clearfix"> </div>
-	</div>
+	</div> -->
 	<!--banner-ends--> 
 	<!--Slider-Starts-Here-->
 				<script src="<?php echo base_url() ?>assets/js/responsiveslides.min.js"></script>
@@ -85,48 +85,10 @@
 		<div class="container">
 			<div class="product-top">
 				<div class="product-one">
-					<div class="col-md-3 product-left">
+					<!-- foreach disini -->
+					<div class="col-md-3 product-left box-produk">
 						<div class="product-main simpleCart_shelfItem">
 							<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="<?php echo base_url() ?>assets/images/p-1.png" alt="" /></a>
-							<div class="product-bottom">
-								<h3>Smart Watches</h3>
-								<p>Explore Now</p>
-								<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
-							</div>
-							<div class="srch">
-								<span>-50%</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 product-left">
-						<div class="product-main simpleCart_shelfItem">
-							<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="<?php echo base_url() ?>assets/images/p-2.png" alt="" /></a>
-							<div class="product-bottom">
-								<h3>Smart Watches</h3>
-								<p>Explore Now</p>
-								<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
-							</div>
-							<div class="srch">
-								<span>-50%</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 product-left">
-						<div class="product-main simpleCart_shelfItem">
-							<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="<?php echo base_url() ?>assets/images/p-3.png"  alt="" /></a>
-							<div class="product-bottom">
-								<h3>Smart Watches</h3>
-								<p>Explore Now</p>
-								<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
-							</div>
-							<div class="srch">
-								<span>-50%</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 product-left">
-						<div class="product-main simpleCart_shelfItem">
-							<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="<?php echo base_url() ?>assets/images/p-4.png" alt="" /></a>
 							<div class="product-bottom">
 								<h3>Smart Watches</h3>
 								<p>Explore Now</p>

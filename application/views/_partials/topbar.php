@@ -30,7 +30,8 @@
 					<ul class="memenu skyblue">
             <li class="active"><a href="<?php echo base_url()?>">Home</a></li>
 						<li class="grid"><a href="<?php echo base_url()?>produk">Produk</a></li>
-						<li class="grid"><a href="<?php echo base_url()?>profil">Profile</a></li>
+            <li class="grid"><a href="<?php echo base_url()?>custom">Custom</a></li>
+            <li class="grid"><a href="<?php echo base_url()?>profil">Profile</a></li>
 						<li class="grid"><a href="<?php echo base_url()?>kontak">Contact</a></li>
 					</ul>
 				</div>
