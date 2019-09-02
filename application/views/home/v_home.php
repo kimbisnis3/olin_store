@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <?php $this->load->view('_partials/head.php'); ?>
-<body> 
+<body class="fadeIn animated"> 
 	<?php $this->load->view('_partials/topbar.php'); ?>
 	<!--banner-starts-->
 	<div class="bnr" id="home">

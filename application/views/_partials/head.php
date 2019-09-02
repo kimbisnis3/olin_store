@@ -15,5 +15,6 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script type="text/javascript" src="<?php echo base_url() ?>assets/js/memenu.js"></script>
     <script>$(document).ready(function(){$(".memenu").memenu();});</script>	
-    <script src="<?php echo base_url() ?>assets/js/jquery.easydropdown.js"></script>			
+    <script src="<?php echo base_url() ?>assets/js/jquery.easydropdown.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" integrity="sha256-PHcOkPmOshsMBC+vtJdVr5Mwb7r0LkSVJPlPrp/IMpU=" crossorigin="anonymous" />			
 </head>
