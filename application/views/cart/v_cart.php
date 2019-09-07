@@ -112,11 +112,12 @@
             jumlah: $(`#qty-${rowid}`).val(),
           },
           success: function(data) {
-              console.log('sukses')
-              total_items(data.total_items)
-              total_cart(data.total_price)
-              load_cart()
-              showNotif('Sukses', 'Produk Diubah', 'success')
+              if (data.sukses == 'success') {
+                total_items(data.total_items)
+                total_cart(data.total_price)
+                load_cart()
+                showNotif('Sukses', 'Produk Diubah', 'success')
+              }
           },
           error: function(jqXHR, textStatus, errorThrown) {
                 console.log('gagal')
@@ -133,11 +134,12 @@
             rowid: rowid,
           },
           success: function(data) {
-              console.log('sukses')
+            if (data.sukses == 'success') {
               total_items(data.total_items)
               total_cart(data.total_price)
               load_cart()
               showNotif('Sukses', 'Produk Dihapus Dari Keranjang', 'success')
+            }
           },
           error: function(jqXHR, textStatus, errorThrown) {
                 console.log('gagal')

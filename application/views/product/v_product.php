@@ -61,9 +61,10 @@
               kode: kode,
           },
           success: function(data) {
-              console.log('sukses')
+            if (data.sukses == 'success') {
               total_items(data.total_items)
               showNotif('Sukses', 'Produk Ditambahkan Ke Keranjang', 'success')
+            }
           },
           error: function(jqXHR, textStatus, errorThrown) {
                 console.log('gagal')
