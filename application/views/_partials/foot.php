@@ -61,3 +61,31 @@
 		</div>
 	</div> -->
 	<!--footer-end-->	
+<script>
+	total_items(<?php echo $this->cart->total_items() ?>)
+	
+	function total_items(x) {
+		$('.total_items').html(x);
+	}
+
+    function total_cart(x)
+    {
+        $('.total-cart').html(`Rp.${numeral(x).format('0,0')}`)
+    }
+
+	function showNotif(title, msg, jenis) {
+	    $.notify({
+	        title: '<strong>' + title + '</strong>',
+	        message: msg
+	    }, {
+	        type: jenis,
+	        z_index: 2000,
+	        allow_dismiss: true,
+	        delay: 10,
+	        animate: {
+	            enter: 'animated bounceIn',
+				exit: 'animated bounceOut'
+	        },
+	    }, );
+	};
+</script>

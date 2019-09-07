@@ -7,7 +7,7 @@
 					<div class="cart box_1">
 						<a href="<?php echo base_url() ?>cart">
 							 <div class="total">
-                <span>0</span>
+                <span class="total_items">0</span>
               </div>
 							<img src="<?php echo base_url() ?>assets/images/cart-1.png" alt="" />
 						</a>
@@ -29,7 +29,7 @@
 				<div class="top-nav">
 					<ul class="memenu skyblue">
             <li class="active"><a href="<?php echo base_url()?>">Home</a></li>
-						<li class="grid"><a href="<?php echo base_url()?>produk">Produk</a></li>
+						<li class="grid"><a href="<?php echo base_url()?>product">Produk</a></li>
             <li class="grid"><a href="<?php echo base_url()?>custom">Custom</a></li>
             <li class="grid"><a href="<?php echo base_url()?>profil">Profile</a></li>
 						<li class="grid"><a href="<?php echo base_url()?>kontak">Contact</a></li>

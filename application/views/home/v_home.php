@@ -4,22 +4,20 @@
 <body class="fadeIn animated"> 
 	<?php $this->load->view('_partials/topbar.php'); ?>
 	<!--banner-starts-->
-	<!-- <div class="bnr" id="home">
+	<div class="bnr" id="home">
 		<div  id="top" class="callbacks_container">
 			<ul class="rslides" id="slider4">
-			    <li>
-					<img src="<?php echo base_url() ?>assets/images/bnr-1.jpg" alt=""/>
-				</li>
-				<li>
-					<img src="<?php echo base_url() ?>assets/images/bnr-2.jpg" alt=""/>
-				</li>
-				<li>
-					<img src="<?php echo base_url() ?>assets/images/bnr-3.jpg" alt=""/>
-				</li>
+            <?php foreach ($slide as $i => $v): ?>
+			<li>
+				<img src="<?php echo prep_url(api_url()).'/uploads/img1.png' ?>" alt=""/>
+				<!-- <img src="<?php echo prep_url(api_url().$v->image) ?>" alt=""/> -->
+			</li>
+            <?php endforeach; ?>
+			    
 			</ul>
 		</div>
 		<div class="clearfix"> </div>
-	</div> -->
+	</div>
 	<!--banner-ends--> 
 	<!--Slider-Starts-Here-->
 				<script src="<?php echo base_url() ?>assets/js/responsiveslides.min.js"></script>

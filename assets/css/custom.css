@@ -1,13 +1,44 @@
 .konten {
     margin-bottom: 50px;
 }
+
 input {
     border-radius: 0 !important;
 }
+
 .information {
     background-color: beige !important;
     padding-top: 50px !important;
 }
+
 .box-produk {
     margin-bottom: 20px !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.table-custom {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-custom td,
+.table-custom th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table-custom tr:nth-child(even) {
+    background-color: #FFFFFF;
+}
+
+.table-custom th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #60ad87;
+    color: white;
 }
