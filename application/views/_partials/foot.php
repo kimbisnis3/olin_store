@@ -84,7 +84,7 @@
 	        delay: 10,
 	        animate: {
 	            enter: 'animated bounceIn',
-				exit: 'animated bounceOut'
+				exit: 'animated zoomOut'
 	        },
 	    }, );
 	};

@@ -63,6 +63,7 @@
           success: function(data) {
               console.log('sukses')
               total_items(data.total_items)
+              showNotif('Sukses', 'Produk Ditambahkan Ke Keranjang', 'success')
           },
           error: function(jqXHR, textStatus, errorThrown) {
                 console.log('gagal')

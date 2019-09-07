@@ -88,6 +88,25 @@ class Cart extends CI_Controller
         $this->cart->insert($data);
     }
 
+    function update()
+    {
+        $rowid  = $this->input->post('rowid');
+        $jumlah = $this->input->post('jumlah');
+        if ($rowid === "all") {
+            $this->cart->destroy();
+        } else {
+            $data = array(
+                'rowid'   => $rowid,
+                'qty'     => $jumlah
+            );
+            $result = $this->cart->update($data);
+            $r['sukses']= $result ? 'success' : 'fail' ;
+            $r['total_items']= $this->cart->total_items();
+            $r['total_price']= $this->cart->total();
+            echo json_encode($r);
+        }
+    }
+
     function remove()
     {
         $rowid = $this->input->post('rowid');

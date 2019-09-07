@@ -52,7 +52,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>Total</td>
+                        <td align="center">Total</td>
                         <td class="total-cart" align="right"> </td>
                     </tr>
                 </tbody>
@@ -84,14 +84,39 @@
                         <td><img style="width: 100px !important;" src="<?php echo prep_url(api_url()).'/uploads/img1.png' ?>" class="img-responsive" alt=""></td>
                         <td>${v.name}</td>
                         <td align="right">Rp. ${numeral(v.price).format('0,0')}</td>
-                        <td align="center">${v.qty}</td>
+                        <td align="center"><input style="height : 30px !important; width : 30px !important;" id="qty-${v.rowid}" type="text" value="${v.qty}"></td>
                         <td align="right">Rp. ${numeral(v.subtotal).format('0,0')}</td>
-                        <td align="center"><button class="btn btn-md "  onclick="remove_cart('${v.rowid}')"><i class="fa fa-times"></i></button></td>
+                        <td align="center">
+                            <button style="border-radius : 0 !important" class="btn btn-md "  onclick="update_cart('${v.rowid}')"><i class="fa fa-save"></i></button>
+                            <button style="border-radius : 0 !important" class="btn btn-md "  onclick="remove_cart('${v.rowid}')"><i class="fa fa-times"></i></button>
+                        </td>
                     </tr>
                 `)
 
             });
             total_cart(data.total_price)
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+                console.log('gagal')
+          }
+      });
+    }
+
+    function update_cart(rowid) {
+        $.ajax({
+          url: `<?php echo base_url() ?>cart/update`,
+          type: "POST",
+          dataType: "JSON",
+          data: {
+            rowid: rowid,
+            jumlah: $(`#qty-${rowid}`).val(),
+          },
+          success: function(data) {
+              console.log('sukses')
+              total_items(data.total_items)
+              total_cart(data.total_price)
+              load_cart()
+              showNotif('Sukses', 'Produk Diubah', 'success')
           },
           error: function(jqXHR, textStatus, errorThrown) {
                 console.log('gagal')
@@ -112,6 +137,7 @@
               total_items(data.total_items)
               total_cart(data.total_price)
               load_cart()
+              showNotif('Sukses', 'Produk Dihapus Dari Keranjang', 'success')
           },
           error: function(jqXHR, textStatus, errorThrown) {
                 console.log('gagal')
