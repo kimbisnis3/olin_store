@@ -22,7 +22,7 @@
 			</div>
 			<div class="ckeckout-top">
 			<div class="cart-items">
-			 <h3>My Cart (<?php echo $this->cart->total_items() ?>)</h3>
+			 <h3>My Cart Items (<span class="total_items"></span>)</h3>
 
             <table class="table-custom">
                 <thead>
