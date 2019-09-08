@@ -94,5 +94,15 @@
 				exit: 'animated zoomOut'
 	        },
 	    }, );
-	};
+	}
+
+	function showimage(url) {
+	    return `<img class="img-responsive" onerror="this.onerror=null; this.src='assets/noimage.png'" style="max-width : 60px;" src="<?php echo prep_url(api_url()) ?>${url}" >`
+	}
+
+	function imgError(image) {
+	    image.onerror = "";
+	    image.src = `assets/noimage.png`;
+	    return true;
+	}
 </script>

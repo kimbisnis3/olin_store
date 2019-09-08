@@ -1,23 +1,6 @@
 <!DOCTYPE html>
 <html>
 <?php $this->load->view('_partials/head.php'); ?>
-<style>
-    .overlay {
-        background: #e9e9e9; 
-        display: none;       
-        position: absolute;  
-        top: 0;             
-        right: 0;
-        bottom: 0;
-        left: 0;
-        opacity: 0.5;
-    }
-    #loading-img {
-        background: url(http://preloaders.net/preloaders/360/Velocity.gif) center center no-repeat;
-        height: 100%;
-        z-index: 20;
-    }
-</style>
 
 <body class="fadeIn animated">
     <?php $this->load->view('_partials/topbar.php'); ?>
@@ -46,7 +29,7 @@
                     <div class="col-md-6">
                         <div class="pull-right">
                             <button class="btn btn-md btn-danger btn-flat btn-clear-cart" onclick="remove_cart('all')"><i class="fa fa-trash"></i> Clear Cart</button>
-                            <button class="btn btn-md btn-success btn-flat btn-checkout"><i class="fa fa-shopping-cart"></i></i> Checkout</button>
+                            <button class="btn btn-md btn-success btn-flat btn-checkout" onclick="checkout()"><i class="fa fa-shopping-cart"></i></i> Checkout</button>
                         </div>
                     </div>
                 </div>                
@@ -89,13 +72,17 @@
     </div>
     
     <?php $this->load->view('_partials/foot.php'); ?>
+    
 </body>
 <script>
     var total_all_items = <?php echo $this->cart->total_items() ?>;
     $(document).ready(function() {
         load_cart()
-        
     })
+
+    function checkout() {
+        window.location = '<?php echo base_url() ?>billing';
+    }
     
     function load_cart() {
         $('.tr-tb').remove();
@@ -109,7 +96,7 @@
             $.each(data.content, function( i, v ) {
                 $('.body-tb').append(`
                     <tr class="tr-tb fadeIn animated">
-                        <td><img style="width: 100px !important;" src="<?php echo prep_url(api_url()).'/uploads/img1.png' ?>" class="img-responsive" alt=""></td>
+                        <td align="center">${showimage(v.image)}</td>
                         <td>${v.name}</td>
                         <td align="right">Rp. ${numeral(v.price).format('0,0')}</td>
                         <td align="center"><input style="height : 30px !important; width : 30px !important;" id="qty-${v.rowid}" type="text" value="${v.qty}"></td>

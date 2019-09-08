@@ -28,7 +28,7 @@
                     <?php foreach ($product as $i => $v): ?>
                         <div class="col-md-3 product-left p-left" style="margin-bottom : 50px !important;">
                             <div class="product-main simpleCart_shelfItem">
-                                <a href="<?php echo base_url() ?>product/<?php echo $v->kodebarang ?>" class="mask"><img class="img-responsive zoom-img" src="<?php echo prep_url(api_url()).'/uploads/img1.png' ?>" alt="" /></a>
+                                <a href="<?php echo base_url() ?>product/<?php echo $v->kodebarang ?>" class="mask"><img onerror='imgError(this)' class="img-responsive zoom-img" src="<?php echo prep_url(api_url()).$v->gambardesign ?>" alt="" /></a>
                                 <div class="product-bottom">
                                     <h3><?php echo $v->namabarang ?></h3>
                                     <p>Explore Now</p>
