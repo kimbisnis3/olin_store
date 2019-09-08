@@ -6,6 +6,23 @@ input {
     border-radius: 0 !important;
 }
 
+select {
+    border-radius: 0px !important;
+}
+
+.btn-flat {
+    border-radius: 0 !important;
+}
+
+.center-mid {
+    margin: auto !important;
+    width: 100% !important;
+}
+
+.invisible {
+    display: none !important;
+}
+
 .information {
     background-color: beige !important;
     padding-top: 50px !important;

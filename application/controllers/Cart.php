@@ -112,6 +112,9 @@ class Cart extends CI_Controller
         $rowid = $this->input->post('rowid');
         if ($rowid === "all") {
             $this->cart->destroy();
+            $r['sukses']=  'success' ;
+            $r['respon']=  'Keranjang Berhasil Dikosongkan' ;
+            echo json_encode($r);
         } else {
             $data = array(
                 'rowid'   => $rowid,
@@ -119,6 +122,7 @@ class Cart extends CI_Controller
             );
             $result = $this->cart->update($data);
             $r['sukses']= $result ? 'success' : 'fail' ;
+            $r['respon']=  'Produk Berhasil Dihapus Dari Keranjang' ;
             $r['total_items']= $this->cart->total_items();
             $r['total_price']= $this->cart->total();
             echo json_encode($r);

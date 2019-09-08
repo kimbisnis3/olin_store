@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html>
 <?php $this->load->view('_partials/head.php'); ?>
+<style>
+    .overlay {
+        background: #e9e9e9; 
+        display: none;       
+        position: absolute;  
+        top: 0;             
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0.5;
+    }
+    #loading-img {
+        background: url(http://preloaders.net/preloaders/360/Velocity.gif) center center no-repeat;
+        height: 100%;
+        z-index: 20;
+    }
+</style>
 
 <body class="fadeIn animated">
     <?php $this->load->view('_partials/topbar.php'); ?>
@@ -18,12 +35,21 @@
     <div class="ckeckout">
 		<div class="container">
 			<div class="ckeck-top heading">
-				<h2>CHECKOUT</h2>
+				<h2>SHOPPING CART</h2>
 			</div>
 			<div class="ckeckout-top">
 			<div class="cart-items">
-			 <h3>My Cart Items (<span class="total_items"></span>)</h3>
-
+                <div class="row" style="margin-bottom: 20px !important;">
+                    <div class="col-md-6">
+                        <h3>My Cart Items (<span class="total_items"></span>)</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="pull-right">
+                            <button class="btn btn-md btn-danger btn-flat btn-clear-cart" onclick="remove_cart('all')"><i class="fa fa-trash"></i> Clear Cart</button>
+                            <button class="btn btn-md btn-success btn-flat btn-checkout"><i class="fa fa-shopping-cart"></i></i> Checkout</button>
+                        </div>
+                    </div>
+                </div>                
             <table class="table-custom">
                 <thead>
                     <tr>
@@ -60,13 +86,15 @@
 			</div>  
 		 </div>
 		</div>
-	</div>
+    </div>
     
     <?php $this->load->view('_partials/foot.php'); ?>
 </body>
 <script>
+    var total_all_items = <?php echo $this->cart->total_items() ?>;
     $(document).ready(function() {
         load_cart()
+        
     })
     
     function load_cart() {
@@ -87,14 +115,15 @@
                         <td align="center"><input style="height : 30px !important; width : 30px !important;" id="qty-${v.rowid}" type="text" value="${v.qty}"></td>
                         <td align="right">Rp. ${numeral(v.subtotal).format('0,0')}</td>
                         <td align="center">
-                            <button style="border-radius : 0 !important" class="btn btn-md "  onclick="update_cart('${v.rowid}')"><i class="fa fa-save"></i></button>
-                            <button style="border-radius : 0 !important" class="btn btn-md "  onclick="remove_cart('${v.rowid}')"><i class="fa fa-times"></i></button>
+                            <button style="border-radius : 0 !important" class="btn btn-md btn-edit-cart"  onclick="update_cart('${v.rowid}')"><i class="fa fa-save"></i></button>
+                            <button style="border-radius : 0 !important" class="btn btn-md btn-delete-cart"  onclick="remove_cart('${v.rowid}')"><i class="fa fa-times"></i></button>
                         </td>
                     </tr>
                 `)
 
             });
             total_cart(data.total_price)
+            btn_action(data.total_items)
           },
           error: function(jqXHR, textStatus, errorThrown) {
                 console.log('gagal')
@@ -103,6 +132,7 @@
     }
 
     function update_cart(rowid) {
+        $('.btn-edit-cart').prop('disabled',true);
         $.ajax({
           url: `<?php echo base_url() ?>cart/update`,
           type: "POST",
@@ -117,15 +147,19 @@
                 total_cart(data.total_price)
                 load_cart()
                 showNotif('Sukses', 'Produk Diubah', 'success')
+                $('.btn-delete-cart').prop('disabled',false);
               }
           },
           error: function(jqXHR, textStatus, errorThrown) {
                 console.log('gagal')
+                $('.btn-delete-cart').prop('disabled',false);
           }
       });
     }
 
     function remove_cart(rowid) {
+        $('.btn-delete-cart').prop('disabled',true);
+        $(".overlay").show();
         $.ajax({
           url: `<?php echo base_url() ?>cart/remove`,
           type: "POST",
@@ -138,13 +172,45 @@
               total_items(data.total_items)
               total_cart(data.total_price)
               load_cart()
-              showNotif('Sukses', 'Produk Dihapus Dari Keranjang', 'success')
+              showNotif('Sukses', data.respon, 'success')
+              $('.btn-delete-cart').prop('disabled',true);
             }
           },
           error: function(jqXHR, textStatus, errorThrown) {
                 console.log('gagal')
+                $('.btn-delete-cart').prop('disabled',true);
           }
       });
     }
+
+    function notifLoading() {
+	    $.notify({
+	        title: '<strong> Processing ... </strong>',
+	        message: '',
+	        icon: 'fa fa-circle-o-notch fa-spin',
+	    }, {
+	        type: 'warning',
+	        placement: {
+	            align: 'center'
+	        },
+	        z_index: 2000,
+	        allow_dismiss: 'false',
+	        animate: {
+	            enter: 'animated fadeIn',
+	            exit: 'animated fadeOut'
+	        },
+	    }, );
+	}
+
+    function btn_action(x) {
+        if(x == 0) {
+            $('.btn-checkout').addClass('invisible') 
+            $('.btn-clear-cart').addClass('invisible') 
+        } else {
+            $('.btn-checkout').removeClass('invisible')
+            $('.btn-clear-cart').removeClass('invisible')
+        }
+    }
+
 </script>
 </html>
