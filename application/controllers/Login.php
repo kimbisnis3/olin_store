@@ -38,14 +38,23 @@ class Login extends CI_Controller{
                     LEFT JOIN mjencust ON mjencust.kode = mcustomer.ref_jenc
                     WHERE mcustomer.user = '$username'";
                 $result = $this->db->query($q)->row();
+                // $d = array(
+                //     prefix_sess().'status'    => "online",
+                //     prefix_sess().'in_cl'     => TRUE,
+                //     prefix_sess().'id'        => $result->id,
+                //     prefix_sess().'nama'      => $result->nama,
+                //     prefix_sess().'user'      => $result->user,
+                //     prefix_sess().'kodecust'  => $result->kode,
+                //     prefix_sess().'mjencust_nama'=> $result->mjencust_nama,
+                // );
                 $d = array(
-                    prefix_sess().'status'    => "online",
-                    prefix_sess().'in_cl'     => TRUE,
-                    prefix_sess().'id'        => $result->id,
-                    prefix_sess().'nama'      => $result->nama,
-                    prefix_sess().'user'      => $result->user,
-                    prefix_sess().'kodecust'  => $result->kode,
-                    prefix_sess().'mjencust_nama'=> $result->mjencust_nama,
+                    'status'    => "online",
+                    'in_cl'     => TRUE,
+                    'id'        => $result->id,
+                    'nama'      => $result->nama,
+                    'user'      => $result->user,
+                    'kodecust'  => $result->kode,
+                    'mjencust_nama'=> $result->mjencust_nama,
                 );
                 $this->session->set_userdata($d);
                 $this->db->trans_complete();
@@ -65,12 +74,12 @@ class Login extends CI_Controller{
     
     function logout(){
         $this->session->sess_destroy();
-        redirect(base_url('login'));
+        // redirect(base_url('login'));
     }
 
     function login_try(){
         // print_r(json_encode($this->session->all_userdata())); 
-        echo sess_data('status');
+        // echo sess_data('status');
         // $d = array(
         //     prefix_sess().'status'    => "online",
         // );
