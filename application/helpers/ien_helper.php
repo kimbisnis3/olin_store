@@ -3,8 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /** If empty null helper **/
 if (!function_exists('status')) {
 
+    function prefix_sess() {
+        return '_olinstore_';
+    }
+
+    function sess_data($data) {
+        $ci =& get_instance();
+        return $ci->session->userdata(prefix_sess().$data);
+    }
+
     function api_url() {
-        return 'image.apadong.xyz';
+        return 'https://mkj.olinbags.com/agen/';
     }
 
     function ien($text)
@@ -43,19 +52,6 @@ if (!function_exists('status')) {
         return $text;
     }
 
-    function checkcolor($text)
-    {
-        if ($text=='t') {
-            $text = '<span class="label label-success" style="align: center;"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i></span>';
-        }
-        else {
-            $text = '<span class="label label-danger" style="align: center;"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></span>';
-        }
-       
-        return $text;
-    }
-
-
     function query_to_var($query,$filter) {
         $find       = array_keys($filter);
         $replace    = array_values($filter);
@@ -73,38 +69,6 @@ if (!function_exists('status')) {
         }
        
         return $data;
-    }
-
-    function normal_date($date)
-    {
-        if ($date != NULL) {
-            
-        $indonesian_month = array("Jan", "Feb", "Mar",
-            "Apr", "May", "Jun",
-            "Jul", "Aug", "Sep",
-            "Oct", "Nov", "Dec");
-        $year        = substr($date, 0, 4); // memisahkan format tahun menggunakan substring
-        $month       = substr($date, 5, 2); // memisahkan format bulan menggunakan substring
-        $currentdate = substr($date, 8, 2); // memisahkan format tanggal menggunakan substring
-        $result = $currentdate . " " . $indonesian_month[(int) $month - 1] . " " . $year;
-
-        return $result;
-        }
-    }
-
-    function statuspo($s)
-    {
-        if ($s == 0) {
-            $s = '<span class="label label-warning">Pending</span>';
-        } else if($s >= 1 AND $s <= 3) {
-            $s = '<span class="label label-primary">Produksi</span>';
-        } else if($s == 4) {
-            $s = '<span class="label label-success">Ready</span>';
-        } else if($s >= 5) {
-            $s = '<span class="label label-info">Dikirim</span>';
-        }
-       
-        return $s;
     }
 
     //IMAGE MANIPULATION
@@ -179,6 +143,94 @@ if (!function_exists('status')) {
         return $img;
 
         
+    }
+
+    function slug($text)
+    {
+        // replace non letter or digits by -
+        $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
+    
+        // trim
+        $text = trim($text, '-');
+    
+        // transliterate
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    
+        // lowercase
+        $text = strtolower($text);
+    
+        // remove unwanted characters
+        $text = preg_replace('~[^-\w]+~', '', $text);
+    
+        if (empty($text))
+        {
+            return 'n-a';
+        }
+    
+        return $text;
+    }
+
+    function id_date($date)
+    {
+        if ($date != NULL) {
+            
+        $indonesian_month = array("Jan", "Feb", "Mar",
+            "Apr", "Mei", "Jun",
+            "Jul", "Agt", "Sep",
+            "Okto", "Nov", "Des");
+        $year        = substr($date, 0, 4); // memisahkan format tahun menggunakan substring
+        $month       = substr($date, 5, 2); // memisahkan format bulan menggunakan substring
+        $currentdate = substr($date, 8, 2); // memisahkan format tanggal menggunakan substring
+        $result = $currentdate . " " . $indonesian_month[(int) $month - 1] . " " . $year;
+
+        return $result;
+    }else {
+        
+    }
+    }
+    
+    function indonesian_date($date)
+    {
+        // fungsi atau method untuk mengubah tanggal ke format indonesia
+        // variabel BulanIndo merupakan variabel array yang menyimpan nama-nama bulan
+        $indonesian_month = array("Januari", "Februari", "Maret",
+            "April", "Mei", "Juni",
+            "Juli", "Agustus", "September",
+            "Oktober", "November", "Desember");
+        $year        = substr($date, 0, 4); // memisahkan format tahun menggunakan substring
+        $month       = substr($date, 5, 2); // memisahkan format bulan menggunakan substring
+        $currentdate = substr($date, 8, 2); // memisahkan format tanggal menggunakan substring
+        $result = $currentdate . " " . $indonesian_month[(int) $month - 1] . " " . $year;
+        return $result;
+    }
+
+    function normal_date($date)
+    {
+        if ($date != NULL) {
+            
+        $indonesian_month = array("Jan", "Feb", "Mar",
+            "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep",
+            "Oct", "Nov", "Dec");
+        $year        = substr($date, 0, 4); // memisahkan format tahun menggunakan substring
+        $month       = substr($date, 5, 2); // memisahkan format bulan menggunakan substring
+        $currentdate = substr($date, 8, 2); // memisahkan format tanggal menggunakan substring
+        $result = $currentdate . " " . $indonesian_month[(int) $month - 1] . " " . $year;
+
+        return $result;
+        }
+    }
+
+    function aktif($text)
+    {
+        if ($text=='0' || $text=='NULL' || $text=='') {
+            $text = '<span class="label label-danger">Tidak Aktif</span>';
+        }
+        else {
+            $text = '<span class="label label-success">Aktif</span>';
+        }
+       
+        return $text;
     }
 
 }

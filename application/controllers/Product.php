@@ -42,7 +42,7 @@ class Product extends CI_Controller
             LEFT JOIN mgudang ON mgudang.kode = msatbrg.ref_gud
             WHERE
                 msatbrg.def = 't'";
-        $data['product'] = $this->dbtwo->query($q)->result();
+        $data['product'] = $this->db->query($q)->result();
         $this->load->view($this->indexpage, $data);
     }
 

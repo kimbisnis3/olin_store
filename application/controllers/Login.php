@@ -1,13 +1,13 @@
 <?php
 
-class Auth extends CI_Controller{
+class Login extends CI_Controller{
 
     function __construct(){
         parent::__construct();
     }
 
     function index(){
-        $this->load->view('auth/v_auth');
+        $this->load->view('login/v_login');
     }
 
     function auth_process(){
@@ -39,13 +39,13 @@ class Auth extends CI_Controller{
                     WHERE mcustomer.user = '$username'";
                 $result = $this->db->query($q)->row();
                 $d = array(
-                    'status'    => "online",
-                    'in_cl'     => TRUE,
-                    'id'        => $result->id,
-                    'nama'      => $result->nama,
-                    'user'      => $result->user,
-                    'kodecust'  => $result->kode,
-                    'mjencust_nama'=> $result->mjencust_nama,
+                    prefix_sess().'status'    => "online",
+                    prefix_sess().'in_cl'     => TRUE,
+                    prefix_sess().'id'        => $result->id,
+                    prefix_sess().'nama'      => $result->nama,
+                    prefix_sess().'user'      => $result->user,
+                    prefix_sess().'kodecust'  => $result->kode,
+                    prefix_sess().'mjencust_nama'=> $result->mjencust_nama,
                 );
                 $this->session->set_userdata($d);
                 $this->db->trans_complete();
@@ -54,7 +54,6 @@ class Auth extends CI_Controller{
                 $r['msg']       = 'Login Sukses';
                 $r['class']     = 'success';
                 echo json_encode($r);
-
             }else{
                 $r['result']    = 'fail';
                 $r['caption']   = 'Gagal';
@@ -66,6 +65,15 @@ class Auth extends CI_Controller{
     
     function logout(){
         $this->session->sess_destroy();
-        redirect(base_url('auth'));
+        redirect(base_url('login'));
+    }
+
+    function login_try(){
+        // print_r(json_encode($this->session->all_userdata())); 
+        echo sess_data('status');
+        // $d = array(
+        //     prefix_sess().'status'    => "online",
+        // );
+        // $this->session->set_userdata($d);
     }
 }

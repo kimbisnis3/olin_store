@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$active_group = 'one';
+$active_group = 'two';
 $query_builder = TRUE;
 
 $db['one'] = array(

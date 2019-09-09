@@ -50,7 +50,7 @@ class Cart extends CI_Controller
                 msatbrg.def = 't'
             AND
                 mbarang.kode ='$kode'";
-        $res = $this->dbtwo->query($q)->row();
+        $res = $this->db->query($q)->row();
         $data = array(
             'id'      => $res->kodebarang,
             'qty'     => 1,

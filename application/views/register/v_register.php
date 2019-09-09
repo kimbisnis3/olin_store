@@ -17,22 +17,22 @@
     <?php $this->load->view('_partials/foot.php'); ?>
   </body>
   <script>
-    function login(kode) {
-        $.ajax({
-          url: `<?php echo base_url() ?>login/auth_process`,
+  function login(kode) {
+      $.ajax({
+          url: `<?php echo base_url() ?>register/savedata`,
           type: "POST",
           dataType: "JSON",
           data: $('#form-data').serialize(),
           success: function(data) {
-            if (data.sukses == 'success') {
-              
-              showNotif('Sukses', 'Login Sukses', 'success')
-            }
+              if (data.sukses == 'success') {
+
+                  showNotif('Sukses', 'Register Sukses', 'success')
+              }
           },
           error: function(jqXHR, textStatus, errorThrown) {
-                console.log('gagal')
+              console.log('gagal')
           }
       });
-    }
-	</script>
+  }
+  </script>
 </html>

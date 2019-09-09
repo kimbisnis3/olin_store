@@ -15,7 +15,7 @@ class Home extends CI_Controller
 
     function index()
     {
-        $data['slide']  = $this->dbtwo->get_where('tconfigimage', array('tipe' => 'ss'))->result();
+        $data['slide']  = $this->db->get_where('tconfigimage', array('tipe' => 'ss'))->result();
         $this->load->view($this->indexpage, $data);
     }
 }
