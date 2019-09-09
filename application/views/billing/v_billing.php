@@ -226,6 +226,10 @@
         
     }
 
+    function data_session(){
+        
+    }
+
 </script>
 
 </html>

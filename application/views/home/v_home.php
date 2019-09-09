@@ -84,19 +84,18 @@
 			<div class="product-top">
 				<div class="product-one">
 					<!-- foreach disini -->
-					<div class="col-md-3 product-left box-produk">
-						<div class="product-main simpleCart_shelfItem">
-							<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="<?php echo base_url() ?>assets/images/p-1.png" alt="" /></a>
-							<div class="product-bottom">
-								<h3>Smart Watches</h3>
-								<p>Explore Now</p>
-								<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
-							</div>
-							<div class="srch">
-								<span>-50%</span>
-							</div>
-						</div>
-					</div>
+					<?php foreach ($produk as $i => $v): ?>
+					<div class="col-md-3 product-left p-left" style="margin-bottom : 50px !important;">
+                            <div class="product-main simpleCart_shelfItem">
+                                <a href="<?php echo base_url() ?>product/detail?q=<?php echo $v->kodebarang ?>" class="mask"><img onerror='imgError(this)' class="img-responsive zoom-img" src="<?php echo prep_url(api_url()).$v->gambardesign ?>" alt="" /></a>
+                                <div class="product-bottom">
+                                    <h3><?php echo $v->namabarang ?></h3>
+                                    <p>Explore Now</p>
+                                    <h4 class="pointer" onclick="add_cart('<?php echo $v->kodebarang ?>')"><a class="item_add"><i></i></a> <span class=" item_price">Rp. <?php echo number_format($v->harga) ?></span></h4>
+                                </div>
+                            </div>
+                        </div>
+					<?php endforeach ?>
 					<div class="clearfix"></div>
 				</div>	
 				<div class="product-one">

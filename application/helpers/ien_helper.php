@@ -9,7 +9,7 @@ if (!function_exists('status')) {
 
     function sess_data($data) {
         $ci =& get_instance();
-        return $ci->session->userdata(prefix_sess().$data);
+        return $ci->session->userdata($data);
     }
 
     function api_url() {
