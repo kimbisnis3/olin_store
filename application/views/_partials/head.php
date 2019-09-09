@@ -7,6 +7,7 @@
     <link href="<?php echo base_url() ?>assets/css/memenu.css" rel="stylesheet" type="text/css" media="all" />
     <link href="<?php echo base_url() ?>assets/select2/dist/css/select2.min.css" rel="stylesheet" />
     <link href="<?php echo base_url() ?>assets/pace/pace.css" rel="stylesheet" />
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/flexslider.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" integrity="sha256-PHcOkPmOshsMBC+vtJdVr5Mwb7r0LkSVJPlPrp/IMpU=" crossorigin="anonymous" />	
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,6 +23,8 @@
     <script src="<?php echo base_url() ?>assets/notify/bootstrap-notify.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script src="<?php echo base_url()?>assets/select2/dist/js/select2.full.min.js"></script>
+    <script src="<?php echo base_url()?>assets/js/imagezoom.js"></script>
+    <script defer src="<?php echo base_url()?>assets/js/jquery.flexslider.js"></script>
     <style>
         
     </style>		

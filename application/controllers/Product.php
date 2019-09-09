@@ -6,6 +6,7 @@ class Product extends CI_Controller
     public $table       = '';
     public $foldername  = '';
     public $indexpage   = 'product/v_product.php';
+    public $detailpage  = 'product/v_product_det.php';
 
     function __construct()
     {
@@ -46,8 +47,10 @@ class Product extends CI_Controller
         $this->load->view($this->indexpage, $data);
     }
 
-    function detail($kode)
+    function detail()
     { 
-
+        $kode = $this->input->get('q');
+        $data['kode'] = $kode;
+        $this->load->view($this->detailpage, $data);
     }
 }
