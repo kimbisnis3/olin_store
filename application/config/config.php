@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/olin_store';
-$config['sess_cookie_name'] = 'olin_store_sess';
+$config['sess_cookie_name'] = 'olinstore';
 
 $config['index_page'] = '';
 
