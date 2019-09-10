@@ -5,7 +5,8 @@ class Payment extends CI_Controller
 {
     public $table       = '';
     public $foldername  = '';
-    public $indexpage   = 'payment/v_payment.php';
+    public $menuaktif   = 'payment';
+    public $indexpage   = 'payment/v_payment';
 
     function __construct()
     {

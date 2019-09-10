@@ -63,9 +63,14 @@
 	<!--footer-end-->	
 <script>
 	total_items(<?php echo $this->cart->total_items() ?>)
+	menuaktif('<?php echo $menuaktif ?>')
 	
 	function total_items(x) {
 		$('.total_items').html(x);
+	}
+
+	function menuaktif(menu) {
+		$(`.menu-${menu}`).addClass('active');
 	}
 
     function total_cart(x)
@@ -102,7 +107,7 @@
 
 	function imgError(image) {
 	    image.onerror = "";
-	    image.src = `assets/noimage.png`;
+	    image.src = `<?php echo base_url() ?>assets/noimage.png`;
 	    return true;
 	}
 </script>

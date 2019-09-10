@@ -5,7 +5,8 @@ class Cart extends CI_Controller
 {
     public $table       = '';
     public $foldername  = '';
-    public $indexpage   = 'cart/v_cart.php';
+    public $menuaktif   = 'cart';
+    public $indexpage   = 'cart/v_cart';
 
     function __construct()
     {
@@ -15,7 +16,8 @@ class Cart extends CI_Controller
 
     function index()
     {
-        $this->load->view($this->indexpage);
+        $data['menuaktif'] = $this->menuaktif;
+        $this->load->view($this->indexpage,$data);
     }
 
     function add()

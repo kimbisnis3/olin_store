@@ -9,7 +9,7 @@
 			<ul class="rslides" id="slider4">
             <?php foreach ($slide as $i => $v): ?>
 			<li>
-				<img src="<?php echo prep_url(api_url()).'/uploads/img1.png' ?>" alt=""/>
+				<img onerror="imgError(this)" src="<?php echo prep_url(api_url()).$v->image ?>" alt=""/>
 				<!-- <img src="<?php echo prep_url(api_url().$v->image) ?>" alt=""/> -->
 			</li>
             <?php endforeach; ?>

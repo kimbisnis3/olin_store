@@ -5,7 +5,8 @@ class Home extends CI_Controller
 {
     public $table       = '';
     public $foldername  = '';
-    public $indexpage   = 'home/v_home.php';
+    public $menuaktif   = 'home';
+    public $indexpage   = 'home/v_home';
 
     function __construct()
     {
@@ -44,7 +45,8 @@ class Home extends CI_Controller
             WHERE
                 msatbrg.def = 't'";
         $data['produk']  = $this->db->query($q)->result();
-        $this->load->view($this->indexpage, $data);
+        $data['menuaktif'] = $this->menuaktif;
+        $this->load->view($this->indexpage,$data);
     }
     
 }

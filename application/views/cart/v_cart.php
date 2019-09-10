@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="ckeckout">
+    <div class="checkout">
 		<div class="container">
 			<div class="ckeck-top heading">
 				<h2>SHOPPING CART</h2>

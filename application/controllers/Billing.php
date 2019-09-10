@@ -5,14 +5,16 @@ class Billing extends CI_Controller {
 
     public $table       = '';
     public $foldername  = '';
-    public $indexpage   = 'billing/v_billing.php';
+    public $menuaktif   = 'billing';
+    public $indexpage   = 'billing/v_billing';
 
     function __construct() {
         parent::__construct();
     }
 
     function index() {
-        $this->load->view($this->indexpage);
+        $data['menuaktif'] = $this->menuaktif;
+        $this->load->view($this->indexpage,$data);
     }
     
 

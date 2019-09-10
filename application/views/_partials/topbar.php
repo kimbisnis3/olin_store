@@ -7,8 +7,8 @@
 					<div class="cart box_1">
 						<a href="<?php echo base_url() ?>cart">
 							 <div class="total">
-                <span class="total_items">0</span>
-              </div>
+								<span class="total_items">0</span>
+							</div>
 							<img src="<?php echo base_url() ?>assets/images/cart-1.png" alt="" />
 						</a>
 						<!-- <p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p> -->
@@ -28,17 +28,17 @@
 				<div class="col-md-10 header-left">
 				<div class="top-nav">
 					<ul class="memenu skyblue">
-            <li class="active"><a href="<?php echo base_url()?>">Home</a></li>
-						<li class="grid"><a href="<?php echo base_url()?>product">Produk</a></li>
-            <li class="grid"><a href="<?php echo base_url()?>custom">Custom</a></li>
-            <li class="grid"><a href="<?php echo base_url()?>profil">Profile</a></li>
-						<li class="grid"><a href="<?php echo base_url()?>kontak">Contact</a></li>
+            			<li class="grid menu-home"><a href="<?php echo base_url()?>">Home</a></li>
+						<li class="grid menu-produk"><a href="<?php echo base_url()?>product">Produk</a></li>
+            			<li class="grid menu-custom"><a href="<?php echo base_url()?>custom">Custom</a></li>
+            			<li class="grid menu-profil"><a href="<?php echo base_url()?>profil">Profile</a></li>
+						<li class="grid menu-kontak"><a href="<?php echo base_url()?>kontak">Contact</a></li>
 					</ul>
 				</div>
 				<div class="clearfix"> </div>
 			</div>
 			<div class="col-md-2 header-right"> 
-      <div class="top-nav">
+      				<div class="top-nav">
 					<ul class="memenu skyblue">
 						<!-- <li class="grid"><a href="<?php echo base_url()?>kontak"><i class="fa fa-shopping-cart"></i> Cart</a></li> -->
 					</ul>

@@ -5,6 +5,7 @@ class Order extends CI_Controller
 {
     public $table       = '';
     public $foldername  = '';
+    public $menuaktif   = 'order';
     public $indexpage   = 'order/v_order.php';
 
     function __construct()

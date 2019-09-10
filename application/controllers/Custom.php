@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Member extends CI_Controller
+class Custom extends CI_Controller
 {
     public $table       = '';
     public $foldername  = '';
-    public $menuaktif   = 'member';
-    public $indexpage   = 'member/v_member';
+    public $menuaktif   = 'custom';
+    public $indexpage   = 'custom/v_custom';
 
     function __construct()
     {
@@ -16,6 +16,7 @@ class Member extends CI_Controller
 
     function index()
     {
-        $this->load->view($this->indexpage);
+        $data['menuaktif'] = $this->menuaktif;
+        $this->load->view($this->indexpage,$data);
     }
 }

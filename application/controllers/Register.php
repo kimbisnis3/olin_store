@@ -5,7 +5,7 @@ class Register extends CI_Controller
 {
     public $table       = '';
     public $foldername  = '';
-    public $indexpage   = 'register/v_register.php';
+    public $indexpage   = 'register/v_register';
 
     function __construct()
     {
