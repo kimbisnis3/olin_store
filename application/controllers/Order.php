@@ -19,6 +19,52 @@ class Order extends CI_Controller
         $this->load->view($this->indexpage);
     }
 
+    public function getall(){
+        $filterawal = date('Y-m-d', strtotime($this->input->post('filterawal')));
+        $filterakhir= date('Y-m-d', strtotime($this->input->post('filterakhir')));
+        $kodecust   = $this->session->userdata('kodecust');
+        $q = "SELECT
+                xorder.id,
+                xorder.kode,
+                xorder.tgl,
+                xorder.ket,
+                xorder.pic,
+                xorder.kgkirim,
+                xorder.kirimke,
+                xorder.bykirim,
+                xorder.ref_layanan,
+                xorder.kurir,
+                xorder.kodekurir,
+                xorder.lokasidari,
+                xorder.lokasike,
+                xorder.pathcorel,
+                xorder.pathimage,
+                xorder.status,
+                mcustomer.nama namacust,
+                mkirim.nama mkirim_nama,
+                mlayanan.nama mlayanan_nama,
+                (SELECT count(statusd) FROM xorderd WHERE xorderd.ref_order = xorder.kode) jmlorder,
+                (SELECT count(statusd) FROM xorderd WHERE xorderd.ref_order = xorder.kode AND statusd=4) orderdone
+            FROM
+                xorder
+            LEFT JOIN mcustomer ON mcustomer.kode = xorder.ref_cust
+            LEFT JOIN mkirim ON mkirim.kode = xorder.ref_kirim
+            LEFT JOIN mlayanan ON mlayanan.kode = xorder.ref_layanan
+            WHERE xorder.void IS NOT TRUE";
+
+        if ($filterawal || $filterakhir) {
+            $q .= " AND
+                    xorder.tgl 
+                BETWEEN '$filterawal' AND '$filterakhir'";
+        }
+        if ($kodecust) {
+            $q .= " AND ref_cust = '$kodecust'";
+        }
+        $q .=" ORDER BY xorder.id DESC" ;
+        $result     = $this->db->query($q)->result();
+        echo json_encode(array('data' => $result));
+    }
+
     public function savedata()
     {   
         $this->db->trans_begin();

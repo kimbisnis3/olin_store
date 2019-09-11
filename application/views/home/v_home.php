@@ -91,7 +91,9 @@
                                 <div class="product-bottom">
                                     <h3><?php echo $v->namabarang ?></h3>
                                     <p>Explore Now</p>
-                                    <h4 class="pointer" onclick="add_cart('<?php echo $v->kodebarang ?>')"><a class="item_add"><i></i></a> <span class=" item_price">Rp. <?php echo number_format($v->harga) ?></span></h4>
+									<!-- <h4 class="pointer" onclick="add_cart('<?php echo $v->kodebarang ?>')"><a class="item_add"><i></i></a> <span class=" item_price">Rp. <?php echo number_format($v->harga) ?></span></h4>
+								 -->
+								 	<h4 class="pointer"><a href="<?php echo base_url() ?>product/detail?q=<?php echo $v->kodebarang ?>" class="item_add"><i></i></a> <span class=" item_price">Rp. <?php echo number_format($v->harga) ?></span></h4>
                                 </div>
                             </div>
                         </div>

@@ -40,7 +40,7 @@ class Auth extends CI_Controller{
                 $result = $this->db->query($q)->row();
                 $d = array(
                     'status'    => "online",
-                    'in_cl'     => TRUE,
+                    'in'        => TRUE,
                     'id'        => $result->id,
                     'nama'      => $result->nama,
                     'user'      => $result->user,
