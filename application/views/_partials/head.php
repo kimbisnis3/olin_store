@@ -1,7 +1,8 @@
 <head>
     <title>Olin Store</title>
-    <link href="<?php echo base_url() ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="<?php echo base_url() ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
     <script src="<?php echo base_url() ?>assets/js/jquery-1.11.0.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/bootstrap/js/bootstrap.min.js"></script>
     <link href="<?php echo base_url() ?>assets/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <link href="<?php echo base_url() ?>assets/css/custom.css" rel="stylesheet" type="text/css" media="all" />
     <link href="<?php echo base_url() ?>assets/css/memenu.css" rel="stylesheet" type="text/css" media="all" />

@@ -2,12 +2,19 @@
 
 class Login extends CI_Controller{
 
+    public $table       = '';
+    public $foldername  = '';
+    public $menuaktif   = 'login';
+    public $indexpage   = 'login/v_login';
+
     function __construct(){
         parent::__construct();
     }
 
-    function index(){
-        $this->load->view('login/v_login');
+    function index()
+    {
+        $data['menuaktif'] = $this->menuaktif;
+        $this->load->view('login/v_login',$data);
     }
 
     function auth_process(){
@@ -58,13 +65,13 @@ class Login extends CI_Controller{
                 );
                 $this->session->set_userdata($d);
                 $this->db->trans_complete();
-                $r['result']    = 'success';
+                $r['status']    = 'success';
                 $r['caption']   = 'Sukses';
                 $r['msg']       = 'Login Sukses';
                 $r['class']     = 'success';
                 echo json_encode($r);
             }else{
-                $r['result']    = 'fail';
+                $r['status']    = 'fail';
                 $r['caption']   = 'Gagal';
                 $r['msg']       = 'Username dan Password tidak sesuai';
                 $r['class']     = 'danger';

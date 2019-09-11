@@ -42,25 +42,47 @@
 			</div>
 		</div>
 	</div>
-	<!--information-end-->
-	<!--footer-starts-->
-	<!-- <div class="footer">
-		<div class="container">
-			<div class="footer-top">
-				<div class="col-md-6 footer-left">
-					<form>
-						<input type="text" value="Enter Your Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Your Email';}">
-						<input type="submit" value="Subscribe">
-					</form>
-				</div>
-				<div class="col-md-6 footer-right">					
-					<p>Store.com</a> </p>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-		</div>
-	</div> -->
-	<!--footer-end-->	
+	<div class="modal fade" id="modal-data" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header no-border">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-hijau">Masuk</h4>
+        </div>
+        <div class="modal-body">
+          <div class="box-body pad">
+            <form id="form-login">
+              <div class="row">
+                <div class="col-md-12">
+                <div class="form-group">
+                  <label>Username</label>
+                  <input type="text" class="form-control" name="user">
+                </div>
+                <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="pass">
+              </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="row" style="margin-bottom : 10px ;!important">
+            <div class="col-md-12">
+              <button class="btn btn-hijau btn-md btn-block" id="btn-sign-in" onclick="login()"><i class="fa fa-sign-in"></i> Sign In</button>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-12" style="text-align: center !important">
+              Belum punya akun ? <span class="text-hijau"><a href="<?php echo base_url() ?>register">Daftar</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>	
 <script>
 	total_items(<?php echo $this->cart->total_items() ?>)
 	menuaktif('<?php echo $menuaktif ?>')
@@ -110,4 +132,55 @@
 	    image.src = `<?php echo base_url() ?>assets/noimage.png`;
 	    return true;
 	}
+
+	function login() {
+      $('[name="user"]').prop('disabled', true)
+      $('[name="pass"]').prop('disabled', true)
+    //   $('#btn-sign-in').prop('disabled', true)
+	  btnproc('#btn-sign-in', 1)
+      $.ajax({
+        url: `<?php echo base_url() ?>login/auth_process`,
+        type: "POST",
+        dataType: "JSON",
+        data: $('#form-login').serialize(),
+        success: function (data) {
+          if (data.status == 'success') {
+            showNotif(data.caption, data.msg, data.class)
+            $('[name="user"]').prop('disabled', false)
+            $('[name="pass"]').prop('disabled', false)
+            // $('#btn-sign-in').prop('disabled', false)
+	  btnproc('#btn-sign-in', 0)
+            location.href = "<?php echo base_url() ?>";
+          } else {
+            showNotif(data.caption, data.msg, data.class)
+            $('[name="user"]').prop('disabled', false)
+            $('[name="pass"]').prop('disabled', false)
+            // $('#btn-sign-in').prop('disabled', false)
+			btnproc('#btn-sign-in', 0)
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          $('[name="user"]').prop('disabled', false)
+          $('[name="pass"]').prop('disabled', false)
+        //   $('#btn-sign-in').prop('disabled', false)
+		btnproc('#btn-sign-in', 0)
+        }
+      });
+    }
+
+    function login_modal() {
+      $('#modal-data').modal('show');
+    }
+
+	function btnproc(prop, tipe, label = 'Processing') {
+      if (tipe == 1) {
+          label_old_btn = ($(prop).html());
+          $(prop).prop('disabled', true);
+          $(prop).html(`<i class="fa fa-spinner fa-spin"></i> ${label}`);
+      } else if (tipe == 0) {
+          $(prop).prop('disabled', false);
+          $(prop).html(`${label_old_btn}`);
+      }
+  	}
+
 </script>

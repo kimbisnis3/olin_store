@@ -35,24 +35,25 @@
 						<li class="grid menu-custom"><a href="<?php echo base_url()?>custom">Custom</a></li>
 						<li class="grid menu-profil"><a href="<?php echo base_url()?>profil">Profile</a></li>
 						<li class="grid menu-kontak"><a href="<?php echo base_url()?>kontak">Contact</a></li>
-						<li class="grid menu-member">
-							<a href="#">Member</a>
-							<div class="mepanel">
-								<div class="row">
-									<div class="col1 me-one"><h4>Member</h4>
-										<ul>
-											<li><a href="products.html">History</a></li>
-											<li><a href="products.html">Payment</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
+						
 						<?php
 							if ($this->session->userdata('in') == TRUE) {
-								echo '<li class="grid menu-member"><a href="#">Member</a></li>';
+								echo '
+								<li class="grid menu-member">
+								<a href="#">Member</a>
+									<div class="mepanel">
+										<div class="row">
+											<div class="col1 me-one"><h4>Member</h4>
+												<ul>
+													<li><a href="'.base_url().'history">History</a></li>
+													<li><a href="'.base_url().'payment">Payment</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li>';
 							} else {
-								echo '<li class="grid menu-sign"><a href="'.base_url().'login">Sign In</a></li>';
+								echo '<li class="grid menu-sign pointer"><a onclick="login_modal()">Sign In</a></li>';
 							}
 						?>
 					</ul>

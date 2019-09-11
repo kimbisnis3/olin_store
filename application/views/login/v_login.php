@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
   <?php $this->load->view('_partials/head.php'); ?>
+  <style>
+    .center-pos {
+      max-width: 25%;
+      margin: 35px auto;
+    }
+    .kotak {
+      background-color: magenta !important;
+    }
+  </style>
   <body class="fadeIn animated">
     <?php $this->load->view('_partials/topbar.php'); ?>
     <div class="breadcrumbs">
@@ -13,33 +22,31 @@
         </div>
       </div>
     </div>
-    <div class="konten">
-
-    </div>
+    <!-- <div class="konten">
+    <div class="center-pos container">
+          <form id="form-data">
+            <div class="row">
+              
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="pass">
+              </div>
+            </div>
+          </form>
+        <div class="row">
+          <button class="btn btn-hijau btn-lg btn-flat btn-block" id="btn-sign-in" onclick="login()"><i class="fa fa-sign-in"></i> Sign In</button>
+        </div>
+        <div class="row">
+          <p>Belum Punya Akun ? <span onclick="open_modal()">Daftar</span></p>
+        </div>
+      </div>
+    </div> -->
     <?php $this->load->view('_partials/foot.php'); ?>
   </body>
+  
   <script>
-    function login(kode) {
-      $('[name="user"]').prop('disabled', true)
-      $('[name="pass"]').prop('disabled', true)
-      $.ajax({
-        url: `<?php echo base_url() ?>login/auth_process`,
-        type: "POST",
-        dataType: "JSON",
-        data: $('#form-data').serialize(),
-        success: function (data) {
-          if (data.sukses == 'success') {
-            showNotif('Sukses', 'Login Sukses', 'success')
-            $('[name="user"]').prop('disabled', false)
-            $('[name="pass"]').prop('disabled', false)
-          }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log('gagal')
-          $('[name="user"]').prop('disabled', false)
-          $('[name="pass"]').prop('disabled', false)
-        }
-      });
-    }
+    
 	</script>
 </html>
