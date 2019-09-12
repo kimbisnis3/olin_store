@@ -167,6 +167,18 @@
             $(`.step`).hide()
         }
         //validation form here
+        // if(page == 1 && $('[name="nama"]').val() == '') {
+        //     return false
+        // }
+        // if(page == 1 && $('[name="alamat"]').val() == '') {
+        //     return false
+        // }
+        // if(page == 1 && $('[name="telp"]').val() == '') {
+        //     return false
+        // }
+        // if(page == 1 && $('[name="email"]').val() == '') {
+        //     return false
+        // }
         $(`.step-${page}`).show()
         Pace.start();
         btn_direct()
