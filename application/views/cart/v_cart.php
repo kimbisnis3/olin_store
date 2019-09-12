@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <?php $this->load->view('_partials/head.php'); ?>
-
+<style>
+    .checkout {
+        margin: 20px !important;
+    }
+</style>
 <body class="fadeIn animated">
     <?php $this->load->view('_partials/topbar.php'); ?>
     <div class="breadcrumbs">
@@ -28,8 +32,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="pull-right">
-                            <button class="btn btn-md btn-danger btn-flat btn-clear-cart" onclick="remove_cart('all')"><i class="fa fa-trash"></i> Clear Cart</button>
-                            <button class="btn btn-md btn-success btn-flat btn-checkout" onclick="checkout()"><i class="fa fa-shopping-cart"></i></i> Checkout</button>
+                            <button class="btn btn-md btn-merah btn-flat btn-clear-cart" onclick="remove_cart('all')"><i class="fa fa-trash"></i> Clear Cart</button>
+                            <button class="btn btn-md btn-hijau btn-flat btn-checkout" onclick="checkout()"><i class="fa fa-shopping-cart"></i></i> Checkout</button>
                         </div>
                     </div>
                 </div>                
@@ -81,7 +85,11 @@
     })
 
     function checkout() {
-        window.location = '<?php echo base_url() ?>billing';
+        if ($('#sess_in').val() == '' || $('#sess_in').val() == null) {
+            login_modal_cart()
+        } else {
+            window.location = '<?php echo base_url() ?>billing';
+        }
     }
     
     function load_cart() {

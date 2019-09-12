@@ -62,7 +62,8 @@
 								<li><span>SKU</span>
 								<span class="women1">: CK09</span></li>
 							</ul> -->
-							<a type="button" class="add-cart item_add pointer" onclick="add_cart('<?php echo $pr->kodebarang ?>')"><i class="fa fa-shopping-cart"></i> ADD TO CART</a>
+							<!-- <a type="button" class="add-cart item_add pointer" onclick="add_cart('<?php echo $pr->kodebarang ?>')"><i class="fa fa-shopping-cart"></i> ADD TO CART</a> -->
+							<button type="button" class="btn btn-hitam btn-lg btn-flat" id="btn-add-cart" onclick="add_cart('<?php echo $pr->kodebarang ?>')"><i class="fa fa-shopping-cart"></i> ADD TO CART</button>
 							
 						</div>
 					</div>
@@ -97,6 +98,7 @@
 </body>
 <script>
     function add_cart(kode) {
+		btnproc('#btn-add-cart', 1)
         $.ajax({
           url: `<?php echo base_url() ?>cart/add`,
           type: "POST",
@@ -107,11 +109,13 @@
           success: function(data) {
             if (data.sukses == 'success') {
               total_items(data.total_items)
-              showNotif('Sukses', 'Produk Ditambahkan Ke Keranjang', 'success')
+			  showNotif('Sukses', 'Produk Ditambahkan Ke Keranjang', 'success')
+			  btnproc('#btn-add-cart', 0)
             }
           },
           error: function(jqXHR, textStatus, errorThrown) {
-                console.log('gagal')
+				console.log('gagal')
+				btnproc('#btn-add-cart', 0)
           }
       });
     }

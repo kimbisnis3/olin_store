@@ -12,20 +12,14 @@
     
 
     .box-button {
-      max-width: 40%;
+      max-width: 60%;
       margin: 35px auto;
-      /* border : 2px solid #53e074 !important;  */
       padding : 30px;
       border-radius: 16px;
     }
 
     .neon {
-      /* background: #f35626; */
       border : 2px solid #53e074 !important; 
-      /* background-image: linear-gradient(92deg, #f35626 0%,#feab3a 100%);  */
-      /* -webkit-background-clip: text; */
-              /* background-clip: text; */
-      /* -webkit-text-fill-color: transparent;  */
       animation: hue 20s infinite linear;
     }
 
@@ -55,29 +49,30 @@
       <div class="box-button container">
         <div class="row">
           <div class="col-md-6">
-            <button class="btn btn-biru btn-lg btn-block" id="btn-sign-up" onclick="open_cust()"><i class="fa fa-user"></i> Customer</button>
+            <button class="btn btn-biru btn-lg btn-block" onclick="open_cust()"><i class="fa fa-user"></i> Daftar Sebagai Customer</button>
           </div>
           <div class="col-md-6">
-            <button class="btn btn-teal btn-lg btn-block" id="btn-sign-up" onclick="open_reseller()"><i class="fa fa-users"></i> Reseller</button>
+            <button class="btn btn-teal btn-lg btn-block" onclick="open_reseller()"><i class="fa fa-users"></i> Daftar Sebagai Reseller</button>
           </div>
         </div>
       </div>
     </div>
     <div class="x">
-      <div class="box-input container neon box-reseller">
+      <div class="box-input container neon box-user">
       <div class="row">
         <div class="col-md-12">
           <div class="pull-right">
-            <h4 class="text-hijau"><i class="fa fa-users"></i> Reseller</h4>
+            <h4 class="text-hijau text-user"> </h4>
           </div>
         </div>
       </div>
-        <form id="form-data">
+        <form id="form-register">
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
                 <label>Nama</label>
                 <input type="text" class="form-control" name="nama">
+                <input type="hidden" class="form-control" name="jencust">
               </div>
             </div>
           </div>
@@ -122,7 +117,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label>Re-type Password</label>
+                <label>Ketik Ulang Password</label>
                 <input type="password" class="form-control" name="typepass">
               </div>
             </div>
@@ -130,79 +125,7 @@
         </form>
         <div class="row">
           <div class="col-md-12">
-            <button class="btn btn-hijau btn-md btn-block" id="btn-sign-up" onclick="register_cust()"><i
-                class="fa fa-sign-in"></i> Register</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="box-input container neon box-customer">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="pull-right">
-            <h4 class="text-hijau"><i class="fa fa-user"></i> Customer</h4>
-          </div>
-        </div>
-      </div>
-        <form id="form-data">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>Nama</label>
-                <input type="text" class="form-control" name="nama">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Telp</label>
-                <input type="text" class="form-control" name="telp">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Email</label>
-                <input type="text" class="form-control" name="email">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>Alamat</label>
-                <input type="text" class="form-control" name="alamat">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>Username</label>
-                <input type="text" class="form-control" name="user">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" name="pass">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>Re-type Password</label>
-                <input type="password" class="form-control" name="typepass">
-              </div>
-            </div>
-          </div>
-        </form>
-        <div class="row">
-          <div class="col-md-12">
-            <button class="btn btn-hijau btn-md btn-block" id="btn-sign-up" onclick="register_cust()"><i
+            <button class="btn btn-hijau btn-md btn-block" id="btn-sign-up" onclick="register()"><i
                 class="fa fa-sign-in"></i> Register</button>
           </div>
         </div>
@@ -214,70 +137,84 @@
   <script>
 
     $(document).ready(function(){
-      $('.box-reseller').hide()
-      $('.box-customer').hide()
+      $('.box-user').hide()
     })
 
     function open_reseller() {
-      $('.box-reseller').show()
-      $('.box-customer').hide()
+      $('.box-user').hide()
+      $('.box-user').show()
+      $('[name="jencust"]').val('res')
+      $('.text-user').html('<i class="fa fa-users"></i> Reseller')
+      $('#form-register')[0].reset();
     }
 
     function open_cust() {
-      $('.box-reseller').hide()
-      $('.box-customer').show()
+      $('.box-user').hide()
+      $('.box-user').show()
+      $('[name="jencust"]').val('cust')
+      $('.text-user').html('<i class="fa fa-user"></i> Customer')
+      $('#form-register')[0].reset();
     }
 
-
-    function register_cust() {
-      $('.form-control').prop('disabled', true)
+    function register() {
+      if ($('[name="nama"]').val() == '' || $('[name="nama"]').val() == null) {
+        $('[name="nama"]').focus()
+        showNotif('Perhatian', 'Lengkapi Data', 'warning')
+        return false
+      }
+      if ($('[name="telp"]').val() == '' || $('[name="telp"]').val() == null) {
+        $('[name="telp"]').focus()
+        showNotif('Perhatian', 'Lengkapi Data', 'warning')
+        return false
+      }
+      if ($('[name="email"]').val() == '' || $('[name="email"]').val() == null) {
+        $('[name="email"]').focus()
+        showNotif('Perhatian', 'Lengkapi Data', 'warning')
+        return false
+      }
+      if ($('[name="alamat"]').val() == '' || $('[name="alamat"]').val() == null) {
+        $('[name="alamat"]').focus()
+        showNotif('Perhatian', 'Lengkapi Data', 'warning')
+        return false
+      }
+      if ($('[name="user"]').val() == '' || $('[name="user"]').val() == null) {
+        $('[name="user"]').focus()
+        showNotif('Perhatian', 'Lengkapi Data', 'warning')
+        return false
+      }
+      if ($('[name="pass"]').val() == '' || $('[name="pass"]').val() == null) {
+        $('[name="pass"]').focus()
+        showNotif('Perhatian', 'Lengkapi Data', 'warning')
+        return false
+      }
+      if ($('[name="typepass"]').val() != $('[name="pass"]').val()) {
+        $('[name="typepass"]').focus()
+        showNotif('Perhatian', 'Ketik Ulang Password Harus Sesuai Dengan Password', 'warning')
+        return false
+      }
+      $('.form-control').prop('readonly', true)
       btnproc('#btn-sign-up', 1)
       $.ajax({
-        url: `<?php echo base_url() ?>register/customer`,
+        url: `<?php echo base_url() ?>register/savedata`,
         type: "POST",
         dataType: "JSON",
-        data: $('#form-register').serialize(),
+        data: $('#form-register').serializeArray(),
         success: function (data) {
           if (data.status == 'success') {
-            showNotif(data.caption, data.msg, data.class)
-            $('.form-control').prop('disabled', false)
+            showNotif(data.header, data.msg, data.class)
+            $('.form-control').prop('readonly', false)
             btnproc('#btn-sign-up', 0)
-            location.href = "<?php echo base_url() ?>";
+            // location.href = "<?php echo base_url() ?>";
+            $('#form-register')[0].reset();
+            setTimeout(function(){ login_modal() }, 1500);
           } else {
-            showNotif(data.caption, data.msg, data.class)
-            $('.form-control').prop('disabled', false)
+            showNotif(data.header, data.msg, data.class)
+            $('.form-control').prop('readonly', false)
             btnproc('#btn-sign-up', 0)
           }
         },
         error: function (jqXHR, textStatus, errorThrown) {
-          $('.form-control').prop('disabled', false)
-          btnproc('#btn-sign-up', 0)
-        }
-      });
-    }
-
-    function register_reseller() {
-      $('.form-control').prop('disabled', true)
-      btnproc('#btn-sign-up', 1)
-      $.ajax({
-        url: `<?php echo base_url() ?>register/reseller`,
-        type: "POST",
-        dataType: "JSON",
-        data: $('#form-register').serialize(),
-        success: function (data) {
-          if (data.status == 'success') {
-            showNotif(data.caption, data.msg, data.class)
-            $('.form-control').prop('disabled', false)
-            btnproc('#btn-sign-up', 0)
-            location.href = "<?php echo base_url() ?>";
-          } else {
-            showNotif(data.caption, data.msg, data.class)
-            $('.form-control').prop('disabled', false)
-            btnproc('#btn-sign-up', 0)
-          }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          $('.form-control').prop('disabled', false)
+          $('.form-control').prop('readonly', false)
           btnproc('#btn-sign-up', 0)
         }
       });

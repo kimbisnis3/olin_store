@@ -17,5 +17,27 @@ class Billing extends CI_Controller {
         $this->load->view($this->indexpage,$data);
     }
     
+    function getprov() {
+        $response = $this->libre->get_province_ro();
+        echo $response; 
+    }
+
+    function getcity() {
+        $provincecode = $this->input->get('provincecode');
+        $response = $this->libre->get_city_ro($provincecode);
+        echo $response; 
+    }
+
+    function getongkir() {
+        $origin         = '445'; //Solo / Surakarta  
+        $destination    = $this->input->get('destination'); 
+        // $weight         = $this->input->get('weight') * 1000;
+        $weight         = 1 * 1000;
+        $courier        = $this->input->get('kurir');
+        $response = $this->libre->get_ongkir_ro($origin,$destination,$weight,$courier);
+        echo $response; 
+        
+    }
+    
 
 }

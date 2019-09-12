@@ -47,6 +47,7 @@
 												<ul>
 													<li><a href="'.base_url().'history">History</a></li>
 													<li><a href="'.base_url().'payment">Payment</a></li>
+													<li><a href="'.base_url().'login/logout">Sign Out</a></li>
 												</ul>
 											</div>
 										</div>

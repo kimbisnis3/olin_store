@@ -18,7 +18,7 @@ class Login extends CI_Controller{
     }
 
     function auth_process(){
-        $username = $this->input->post('username');
+        $username = $this->input->post('user');
         $password = $this->input->post('pass');
             $where = array(
                 'aktif'     => 't',
@@ -45,18 +45,9 @@ class Login extends CI_Controller{
                     LEFT JOIN mjencust ON mjencust.kode = mcustomer.ref_jenc
                     WHERE mcustomer.user = '$username'";
                 $result = $this->db->query($q)->row();
-                // $d = array(
-                //     prefix_sess().'status'    => "online",
-                //     prefix_sess().'in_cl'     => TRUE,
-                //     prefix_sess().'id'        => $result->id,
-                //     prefix_sess().'nama'      => $result->nama,
-                //     prefix_sess().'user'      => $result->user,
-                //     prefix_sess().'kodecust'  => $result->kode,
-                //     prefix_sess().'mjencust_nama'=> $result->mjencust_nama,
-                // );
                 $d = array(
                     'status'    => "online",
-                    'in_cl'     => TRUE,
+                    'in'        => TRUE,
                     'id'        => $result->id,
                     'nama'      => $result->nama,
                     'user'      => $result->user,
@@ -81,7 +72,7 @@ class Login extends CI_Controller{
     
     function logout(){
         $this->session->sess_destroy();
-        // redirect(base_url('login'));
+        redirect(base_url());
     }
 
     function login_try(){

@@ -43,11 +43,12 @@
 		</div>
 	</div>
 	<div class="modal fade" id="modal-data" role="dialog" data-backdrop="static">
+	<input type="hidden" id="sess_in" value="<?php $this->session->userdata()?>">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header no-border">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title text-hijau">Masuk</h4>
+          <h4 class="modal-title text-hijau label-login">Masuk</h4>
         </div>
         <div class="modal-body">
           <div class="box-body pad">
@@ -70,7 +71,7 @@
         <div class="modal-footer">
           <div class="row" style="margin-bottom : 10px ;!important">
             <div class="col-md-12">
-              <button class="btn btn-hijau btn-md btn-block" id="btn-sign-in" onclick="login()"><i class="fa fa-sign-in"></i> Sign In</button>
+              <button class="btn btn-hijau btn-md btn-block" id="btn-sign-in"><i class="fa fa-sign-in"></i> Sign In</button>
             </div>
           </div>
           <hr>
@@ -134,42 +135,103 @@
 	}
 
 	function login() {
-      $('[name="user"]').prop('disabled', true)
-      $('[name="pass"]').prop('disabled', true)
-    //   $('#btn-sign-in').prop('disabled', true)
-	  btnproc('#btn-sign-in', 1)
-      $.ajax({
-        url: `<?php echo base_url() ?>login/auth_process`,
-        type: "POST",
-        dataType: "JSON",
-        data: $('#form-login').serialize(),
-        success: function (data) {
-          if (data.status == 'success') {
-            showNotif(data.caption, data.msg, data.class)
-            $('[name="user"]').prop('disabled', false)
-            $('[name="pass"]').prop('disabled', false)
-            // $('#btn-sign-in').prop('disabled', false)
-	  btnproc('#btn-sign-in', 0)
-            location.href = "<?php echo base_url() ?>";
-          } else {
-            showNotif(data.caption, data.msg, data.class)
-            $('[name="user"]').prop('disabled', false)
-            $('[name="pass"]').prop('disabled', false)
-            // $('#btn-sign-in').prop('disabled', false)
-			btnproc('#btn-sign-in', 0)
-          }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          $('[name="user"]').prop('disabled', false)
-          $('[name="pass"]').prop('disabled', false)
-        //   $('#btn-sign-in').prop('disabled', false)
-		btnproc('#btn-sign-in', 0)
-        }
-      });
-    }
+		if ($('[name="user"]').val() == '' || $('[name="user"]').val() == null) {
+			$('[name="user"]').focus()
+			showNotif('Perhatian', 'Lengkapi Data', 'warning')
+			return false
+		}
+		if ($('[name="pass"]').val() == '' || $('[name="pass"]').val() == null) {
+			$('[name="pass"]').focus()
+			showNotif('Perhatian', 'Lengkapi Data', 'warning')
+			return false
+		}
+		$('[name="user"]').prop('readonly', true)
+		$('[name="pass"]').prop('readonly', true)
+		btnproc('#btn-sign-in', 1)
+		$.ajax({
+			url: `<?php echo base_url() ?>login/auth_process`,
+			type: "POST",
+			dataType: "JSON",
+			data: $('#form-login').serialize(),
+			success: function (data) {
+				if (data.status == 'success') {
+					showNotif(data.caption, data.msg, data.class)
+					$('[name="user"]').prop('readonly', false)
+					$('[name="pass"]').prop('readonly', false)
+					location.reload();
+					btnproc('#btn-sign-in', 0)
+					location.href = "<?php echo base_url() ?>";
+				} else {
+					showNotif(data.caption, data.msg, data.class)
+					$('[name="user"]').prop('readonly', false)
+					$('[name="pass"]').prop('readonly', false)
+					btnproc('#btn-sign-in', 0)
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				$('[name="user"]').prop('readonly', false)
+				$('[name="pass"]').prop('readonly', false)
+				btnproc('#btn-sign-in', 0)
+			}
+		});
+	}
+
+	function login_cart(tipe) {
+		if ($('[name="user"]').val() == '' || $('[name="user"]').val() == null) {
+			$('[name="user"]').focus()
+			showNotif('Perhatian', 'Lengkapi Data', 'warning')
+			return false
+		}
+		if ($('[name="pass"]').val() == '' || $('[name="pass"]').val() == null) {
+			$('[name="pass"]').focus()
+			showNotif('Perhatian', 'Lengkapi Data', 'warning')
+			return false
+		}
+		$('[name="user"]').prop('readonly', true)
+		$('[name="pass"]').prop('readonly', true)
+		btnproc('#btn-sign-in', 1)
+		$.ajax({
+			url: `<?php echo base_url() ?>login/auth_process`,
+			type: "POST",
+			dataType: "JSON",
+			data: $('#form-login').serialize(),
+			success: function (data) {
+				if (data.status == 'success') {
+					showNotif(data.caption, data.msg, data.class)
+					$('[name="user"]').prop('readonly', false)
+					$('[name="pass"]').prop('readonly', false)
+					location.reload();
+					btnproc('#btn-sign-in', 0)
+					if (tipe == 'cart') {
+						location.href = "<?php echo base_url() ?>billing";
+					} else {
+						location.href = "<?php echo base_url() ?>";
+					}
+				} else {
+					showNotif(data.caption, data.msg, data.class)
+					$('[name="user"]').prop('readonly', false)
+					$('[name="pass"]').prop('readonly', false)
+					btnproc('#btn-sign-in', 0)
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				$('[name="user"]').prop('readonly', false)
+				$('[name="pass"]').prop('readonly', false)
+				btnproc('#btn-sign-in', 0)
+			}
+		});
+	}
 
     function login_modal() {
-      $('#modal-data').modal('show');
+    	$('.label-login').html('Masuk');
+		$('#modal-data').modal('show');
+		$('#btn-sign-in').attr('onclick','login_cart("all")');
+	}
+	
+	function login_modal_cart() {
+		$('.label-login').html('Masuk Untuk Checkout');
+		$('#modal-data').modal('show');
+		$('#btn-sign-in').attr('onclick','login_cart("cart")');
     }
 
 	function btnproc(prop, tipe, label = 'Processing') {
@@ -181,6 +243,8 @@
           $(prop).prop('disabled', false);
           $(prop).html(`${label_old_btn}`);
       }
-  	}
+	  }
+	  
+	  
 
 </script>

@@ -76,25 +76,30 @@
                     <div class="row" style="margin-bottom: 20px !important;">
                         <div class="col-md-3">
                             <label for="">Provinsi</label>
-                            <select class="form-control" name="provinsi">
+                            <select class="form-control" name="provinsi" id="provinsi" onchange="getcity()">
                                 <option value="">-</option>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label for="">Kota</label>
-                            <select class="form-control" name="kota">
+                            <select class="form-control" name="kota" id="kota">
                                 <option value="">-</option>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label for="">Kurir</label>
-                            <select class="form-control" name="kurir">
+                            <select class="form-control" name="kurir" id="kurir" onchange="getservice()">
                                 <option value="">-</option>
+                                <option value="jne">JNE</option>
+                                <option value="tiki">TIKI</option>
+                                <option value="pos">POS</option>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label for="">Service</label>
-                            <input type="text" class="form-control" name="email">
+                            <select class="form-control" name="service" id="service">
+                                <option value="">-</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -151,6 +156,7 @@
         load_cart()
         Pace.stop();
         btn_direct()
+        getprov()
     })
 
     function next_page() {
@@ -160,6 +166,7 @@
             page = page + 1
             $(`.step`).hide()
         }
+        //validation form here
         $(`.step-${page}`).show()
         Pace.start();
         btn_direct()
@@ -226,9 +233,74 @@
         
     }
 
-    function data_session(){
-        
+    function getprov() {
+	    $(`#provinsi`).attr('readonly', true);
+        $.ajax({
+	        url: `<?php echo base_url() ?>billing/getprov`,
+	        type: "GET",
+	        dataType: "JSON",
+	        success: function(data) {
+                let arr = data.rajaongkir.results;
+                getselect('#provinsi', 'kelasprov', 'province_id', 'province',arr)
+                $(`#provinsi`).attr('readonly', false);
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Error on process');
+                $(`#provinsi`).attr('readonly', false);
+	        }
+	    });
     }
+
+    function getcity() {
+        let kodeprovinsi = $(`#provinsi`).val()
+        $(`#kota`).attr('readonly', true);
+        $.ajax({
+	        url: `<?php echo base_url() ?>billing/getcity?provincecode=${kodeprovinsi}`,
+	        type: "GET",
+	        dataType: "JSON",
+	        success: function(data) {
+                let arr = data.rajaongkir.results;
+                getselect('#kota', 'kelaskota', 'city_id', 'city_name', arr)
+	            $(`#kota`).attr('readonly', false);
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Error on process');
+                $(`#kota`).attr('readonly', false);
+	        }
+	    });
+    }
+
+    function getservice() {
+        let kodekurir       = $(`#kurir`).val()
+        let kodekota        = $(`#kota`).val()
+        $(`#service`).attr('readonly', true);
+        $.ajax({
+	        url: `<?php echo base_url() ?>billing/getongkir?destination=${kodekota}&kurir=${kodekurir}`,
+	        type: "GET",
+	        dataType: "JSON",
+	        success: function(data) {
+                let arr = data.rajaongkir.results[0].costs;
+                getselect('#service', 'kelasservice', 'service', 'description', arr)
+                console.log(arr)
+	            $(`#service`).attr('readonly', false);
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Error on process');
+                $(`#service`).attr('readonly', false);
+	        }
+	    });
+    }
+
+    function getselect(prop, classoption, val, caption, arr) {
+	    $(`${prop}`).after(function() { $(`.${classoption}`).remove() });
+		$(`${prop}`).val('');
+        $(`${prop}`).trigger('change');
+        
+        // $(`${prop}`).append(`<option class="${classoption}" value="">-</option>`);
+        $.each(arr, function (i, v) {
+            $(`${prop}`).append(`<option class="${classoption}" value="${v[val]}">${v[caption]}</option>`);
+        })
+	}
 
 </script>
 
