@@ -12,22 +12,62 @@ class Payment extends CI_Controller
     {
         parent::__construct();
         include(APPPATH . 'libraries/dbinclude.php');
+        include(APPPATH . 'libraries/sessionakses.php');
     }
 
     function index()
     {
-        $this->load->view($this->indexpage);
+        $data['menuaktif'] = $this->menuaktif;
+        $this->load->view($this->indexpage,$data);
     }
 
-    public function getall()
-    {
-        $q ="SELECT * FROM mpembayaran";
-        $result = $this->db->query($q)->result();
-        echo json_encode(
-            array(
-                'data' => $result
-                )
-        );
+    public function getall(){
+        $filteragen = $this->session->userdata('kodecust');
+        $q = "SELECT 
+                xpelunasan.id,
+                xpelunasan.kode,
+                xpelunasan.tgl tgl_real,
+                to_char(xpelunasan.tgl, 'DD Mon YYYY') tgl,
+                xpelunasan.total,
+                xpelunasan.bayar,
+                xpelunasan.total - xpelunasan.bayar kurang,
+                xpelunasan.posted,
+                xpelunasan.ket,
+                xpelunasan.ref_jual,
+                xpelunasan.kodeunik,
+                mcustomer.nama mcustomer_nama,
+                mgudang.nama mgudang_nama,
+                mjenbayar.nama mjenbayar_nama
+            FROM 
+                xpelunasan
+            LEFT JOIN mcustomer ON mcustomer.kode = xpelunasan.ref_cust
+            LEFT JOIN mgudang ON mgudang.kode = xpelunasan.ref_gud
+            LEFT JOIN mjenbayar ON mjenbayar.kode = xpelunasan.ref_jenbayar
+            WHERE xpelunasan.void IS NOT TRUE";
+        if ($filteragen) {
+            $q .= " AND ref_cust = '$filteragen'";
+        }
+        $result     = $this->db->query($q)->result();
+        $list       = [];
+        foreach ($result as $i => $r) {
+            $row['no']              = $i + 1;
+            $row['id']              = $r->id;
+            $row['kode']            = $r->kode;
+            $row['tgl']             = $r->tgl;
+            $row['mcustomer_nama']  = $r->mcustomer_nama;
+            $row['mgudang_nama']    = $r->mgudang_nama;
+            $row['mjenbayar_nama']  = $r->mjenbayar_nama;
+            $row['total']           = number_format($r->total);
+            $row['bayar']           = number_format($r->bayar);
+            $row['kurang']          = number_format($r->kurang);
+            $row['ket']             = $r->ket;
+            $row['posted']          = $r->posted;
+            $row['ref_jual']        = $r->ref_jual;
+            $row['kodeunik']        = $r->kodeunik;
+
+            $list[] = $row;
+        }
+        echo json_encode(array('data' => $list));
     }
 
     public function savedata()
@@ -76,5 +116,94 @@ class Payment extends CI_Controller
                 );
         }
         echo json_encode($r);
+    }
+
+    public function getdetail()
+    {
+        $kodepelunasan = $this->input->post('kodepelunasan');
+        $q = "SELECT
+                mbarang.id,
+                mbarang.kode,
+                mbarang.nama,
+                mbarang.ket,
+                msatbrg.id idsatbarang,
+                msatbrg.konv,
+                msatbrg.ket ketsat,
+                msatbrg.harga,
+                msatbrg.ref_brg,
+                msatbrg.ref_sat,
+                msatuan.nama satuan_nama
+            FROM
+                xpelunasand
+            LEFT JOIN mbarang ON mbarang.kode = xpelunasand.ref_brg
+            LEFT JOIN msatbrg ON msatbrg.kode = xpelunasand.ref_satbrg
+            LEFT JOIN msatuan ON msatuan.kode = msatbrg.ref_sat
+            WHERE xpelunasand.ref_pelun = '$kodepelunasan'";
+        $result     = $this->db->query($q)->result();
+        $str        = '<table class="table fadeIn animated">
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Konv</th>
+                            <th>Satuan</th>
+                            <th>Harga</th>
+                            <th>Keterangan</th>
+                        </tr>';
+        foreach ($result as $i => $r) {
+            $str    .= '<tr>
+                            <td>'.($i + 1).'.</td>
+                            <td>'.$r->nama.'</td>
+                            <td>'.$r->konv.'</td>
+                            <td>'.$r->satuan_nama.'</td>
+                            <td>'.$r->harga.'</td>
+                            <td>'.$r->ket.'</td>
+                        </tr>';
+        }
+
+        $str        .= '</table>';
+        echo $str;
+    }
+
+    public function getorder(){
+        $q = "select qr.*, (qr.total - qr.dibayar) kurang from (
+                select 
+                xorder.id,
+                xorder.kode,
+                xorder.tgl,
+                xorder.ket,
+                xorder.pic,
+                xorder.kgkirim,
+                xorder.bykirim,
+                xorder.ref_cust,
+                xorder.ref_kirim,
+                mcustomer.nama mcustomer_nama,
+                case xorder.ref_kirim 
+                when 'GX0002' then xorder.total
+                when 'GX0001' then xorder.total - xorder.bykirim
+                end as total,
+                (select sum(xpelunasan.bayar) from xpelunasan
+                where xpelunasan.void is not true 
+                and xpelunasan.ref_jual = xorder.kode) dibayar
+                from xorder
+                join mcustomer on mcustomer.kode = xorder.ref_cust
+                ) qr
+                where (qr.total - qr.dibayar) > 0";
+        $result     = $this->db->query($q)->result();
+        $list       = [];
+        foreach ($result as $i => $r) {
+            $row['no']              = $i + 1;
+            $row['id']              = $r->id;
+            $row['kode']            = $r->kode;
+            $row['ref_cust']        = $r->ref_cust;
+            $row['mcustomer_nama']  = $r->mcustomer_nama;
+            $row['tgl']             = normal_date($r->tgl);
+            $row['total']           = $r->total;
+            $row['dibayar']         = $r->dibayar;
+            $row['kurang']          = $r->kurang;
+            $row['ket']             = $r->ket;
+
+            $list[] = $row;
+        }   
+        echo json_encode(array('data' => $list));
     }
 }

@@ -10,6 +10,7 @@ class Billing extends CI_Controller {
 
     function __construct() {
         parent::__construct();
+        include(APPPATH . 'libraries/sessionakses.php');
     }
 
     function index() {
