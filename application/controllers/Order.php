@@ -92,7 +92,13 @@ class Order extends CI_Controller
             $rowb['ket']       = $Brg->msatbrg_ket;
             $b[] = $rowb;
         }
-        echo json_encode($b);
+        // echo json_encode($b);
+        echo json_encode(
+            array(
+                'content' => $b, 
+                'total_items' => $this->cart->total_items(), 
+                'total_price' => $this->cart->total(), 
+        ));
     }
 
     public function savedatax()
