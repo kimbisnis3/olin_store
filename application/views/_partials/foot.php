@@ -18,6 +18,7 @@
 						<li><a href="#"><p>Our Stores</p></a></li>
 						<li><a href="contact.html"><p>Contact Us</p></a></li>
 						<li><a href="#"><p>Top Sellers</p></a></li>
+						<li><a href="#"><p>Top Sellers</p></a></li>
 					</ul>
 				</div>
 				<div class="col-md-3 infor-left">
@@ -27,7 +28,7 @@
 						<li><a href="#"><p>My Credit slips</p></a></li>
 						<li><a href="#"><p>My Merchandise returns</p></a></li>
 						<li><a href="#"><p>My Personal info</p></a></li>
-						<li><a href="#"><p>My Addresses</p></a></li>
+						<li><a href="#"><p><?php $this->session->userdata('nama')?></p></a></li>
 					</ul>
 				</div>
 				<div class="col-md-3 infor-left">
@@ -42,8 +43,8 @@
 			</div>
 		</div>
 	</div>
+	<input type="hidden" id="sess_in" value="<?php echo $this->session->userdata('in')?>">
 	<div class="modal fade" id="modal-data" role="dialog" data-backdrop="static">
-	<input type="hidden" id="sess_in" value="<?php $this->session->userdata()?>">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header no-border">
@@ -243,8 +244,7 @@
           $(prop).prop('disabled', false);
           $(prop).html(`${label_old_btn}`);
       }
-	  }
-	  
+	}
 	  
 
 </script>

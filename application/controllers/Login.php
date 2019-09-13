@@ -53,6 +53,7 @@ class Login extends CI_Controller{
                     'user'      => $result->user,
                     'kodecust'  => $result->kode,
                     'mjencust_nama'=> $result->mjencust_nama,
+                    'ref_jenc'  => $result->ref_jenc,
                 );
                 $this->session->set_userdata($d);
                 $this->db->trans_complete();
@@ -73,6 +74,36 @@ class Login extends CI_Controller{
     function logout(){
         $this->session->sess_destroy();
         redirect(base_url());
+    }
+
+    function sessdata() {
+        $kode = $this->session->userdata('kodecust');
+        $q = "SELECT 
+            mcustomer.id,
+            mcustomer.kode,
+            mcustomer.nama,
+            mcustomer.alamat,
+            mcustomer.telp,
+            mcustomer.email,
+            mcustomer.aktif,
+            mcustomer.ref_jenc,
+            mcustomer.user,
+            mcustomer.pass,
+            mjencust.nama mjencust_nama
+        FROM
+            mcustomer
+        LEFT JOIN mjencust ON mjencust.kode = mcustomer.ref_jenc
+        WHERE mcustomer.kode = '$kode'
+        ";
+        $r = $this->db->query($q)->row();
+        $result = array(
+            'nama'  => $r->nama,
+            'alamat'=> $r->alamat,
+            'telp'  => $r->telp,
+            'email' => $r->email,
+            'jeniscust' => $r->mjencust_nama,
+        );
+        echo json_encode($result);
     }
 
     function login_try(){

@@ -3,7 +3,7 @@
 <?php $this->load->view('_partials/head.php'); ?>
 <body class="fadeIn animated"> 
     <?php $this->load->view('_partials/topbar.php'); ?>
-    <!-- <div class="breadcrumbs" style="margin-bottom: 25px !important;">
+    <div class="breadcrumbs" style="margin-bottom: 25px !important;">
         <div class="container">
             <div class="breadcrumbs-main">
                 <ol class="breadcrumb">
@@ -12,16 +12,15 @@
                 </ol>
             </div>
         </div>
-    </div> -->
+    </div>
     <div class="container" style="margin-top: 25px !important">
         <div class="ckeck-top heading">
-            <h2>Billing</h2>
+            <h2 class="judul-page">Billing</h2>
         </div>
     </div>
 	<div class="konten"> 
-		<div class="container step step-1">
+		<!-- <div class="container step step-1">
             <div class="row">
-                <!-- <div class="col-md-2"></div> -->
                 <div class="col-md-12">
                     <div class="row" style="margin-bottom: 20px !important;">
                         <div class="col-md-3">
@@ -42,10 +41,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-md-2"></div> -->
             </div>
-        </div>
-        <div class="container step step-2">
+        </div> -->
+        <div class="container step step-1">
             <div class="row">
                 <!-- <div class="col-md-2"></div> -->
                 <div class="col-md-12">
@@ -97,16 +95,35 @@
                         </div>
                         <div class="col-md-3">
                             <label for="">Service</label>
-                            <select class="form-control" name="service" id="service">
+                            <select class="form-control" name="service" id="service" onchange="getongkir()">
                                 <option value="">-</option>
                             </select>
+                            <input type="hidden" class="form-control" name="arr_service" id="arr_service"/>
                         </div>
                     </div>
                 </div>
                 <!-- <div class="col-md-2"></div> -->
             </div>
+            <div class="row">
+                <!-- <div class="col-md-2"></div> -->
+                <div class="col-md-12">
+                    <div class="row" style="margin-bottom: 20px !important;">
+                        <div class="col-md-3">
+                            <label for="">Biaya Kirim</label>
+                            <input type="text" class="form-control" name="biaya" id="biaya" readonly="true"/>
+                            <input type="hidden" class="form-control" name="kodekurir" id="kodekurir" readonly="true"/>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Bank</label>
+                            <select class="form-control" name="bank" id="bank">
+                                <option value="">-</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="container step step-3">
+        <div class="container step step-2">
 			<div class="row">
             <table class="table-custom">
                 <thead>
@@ -132,6 +149,9 @@
             </table>
             </div>
         </div>
+        <div class="container step step-3">
+            <!-- page konfimasi, kode unik  -->
+        </div>
         <div class="containter btn-step" style="margin-top: 25px !important;">
             <div class="ckeck-top heading">
                 <div class="row">
@@ -142,7 +162,6 @@
                 </div>
             </div>
         </div>
-        
 	</div>
 	<?php $this->load->view('_partials/foot.php'); ?>
 </body>
@@ -151,34 +170,115 @@
     var page = 1;
     var maxpage = 3;
     var minpage = 1;
+    var arr_barang = [];
     $(document).ready(function() {
         initstep()
         load_cart()
-        Pace.stop();
+        Pace.stop()
         btn_direct()
         getprov()
+        getbank()
+        getsessdata()
+        console.log(arr_barang)
     })
+
+    function getsessdata() {
+        $.ajax({
+	        url: `<?php echo base_url() ?>login/sessdata`,
+	        type: "GET",
+	        dataType: "JSON",
+	        success: function(data) {
+                $('[name="nama_penerima"]').val(data.nama); 
+                $('[name="telp_penerima"]').val(data.telp); 
+                $('[name="email_penerima"]').val(data.email); 
+                $('[name="alamat_penerima"]').val(data.alamat); 
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Error on process');
+	        }
+	    });
+    }
+
+    function savedata(){
+        $.ajax({
+	        url: `<?php echo base_url() ?>order/savedata`,
+	        type: "POST",
+	        dataType: "JSON",
+            data : {
+                nama_penerima   : $('[name="nama_penerima"]').val(),
+                telp_penerima   : $('[name="telp_penerima"]').val(),
+                email_penerima  : $('[name="email_penerima"]').val(), 
+                alamat_penerima : $('[name="alamat_penerima"]').val() ,
+                provinsito      : $('[name="provinsi"]').val(),
+                cityto          : $('[name="kota"]').val(),
+                maskprovinsito  : $('[name="provinsi"]').html(),
+                maskcityto      : $('[name="kota"]').html(),
+                kgkirim         : $('[name="kgkirim"]').val(),
+                bykirim         : $('[name="biaya"]').val(),
+                kodekurir       : $('[name="kodekurir"]').val(),
+                kurir           : $('[name="kurir"]').val(),
+                arr_produk      : arr_barang.content
+            },
+	        success: function(data) {
+                console.log('sukses')
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Error on process');
+	        }
+	    });
+    }
 
     function next_page() {
         Pace.stop();
       	Pace.bar.render();
+        //validation form here
+        if(page == 1 && $('[name="nama_penerima"]').val() == '') {
+            $('[name="nama_penerima"]').focus()
+            showNotif('Perhatian', 'Lengkapi Data', 'warning')
+            return false
+        }
+        if(page == 1 && $('[name="telp_penerima"]').val() == '') {
+            $('[name="telp_penerima"]').focus()
+            showNotif('Perhatian', 'Lengkapi Data', 'warning')
+            return false
+        }
+        if(page == 1 && $('[name="email_penerima"]').val() == '') {
+            $('[name="email_penerima"]').focus()
+            showNotif('Perhatian', 'Lengkapi Data', 'warning')
+            return false
+        }
+        if(page == 1 && $('[name="alamat_penerima"]').val() == '') {
+            $('[name="alamat_penerima"]').focus()
+            showNotif('Perhatian', 'Lengkapi Data', 'warning')
+            return false
+        }
+
+        if(page == 1 && $('[name="provinsi"]').val() == '') {
+            $('[name="provinsi"]').focus()
+            showNotif('Perhatian', 'Lengkapi Data', 'warning')
+            return false
+        }
+        if(page == 1 && $('[name="kota"]').val() == '') {
+            $('[name="kota"]').focus()
+            showNotif('Perhatian', 'Lengkapi Data', 'warning')
+            return false
+        }
+        if(page == 1 && $('[name="kurir"]').val() == '') {
+            $('[name="kurir"]').focus()
+            showNotif('Perhatian', 'Lengkapi Data', 'warning')
+            return false
+        }
+        if(page == 1 && $('[name="service"]').val() == '') {
+            $('[name="service"]').focus()
+            showNotif('Perhatian', 'Lengkapi Data', 'warning')
+            return false
+        }
+
         if(page != maxpage) {
             page = page + 1
             $(`.step`).hide()
         }
-        //validation form here
-        // if(page == 1 && $('[name="nama"]').val() == '') {
-        //     return false
-        // }
-        // if(page == 1 && $('[name="alamat"]').val() == '') {
-        //     return false
-        // }
-        // if(page == 1 && $('[name="telp"]').val() == '') {
-        //     return false
-        // }
-        // if(page == 1 && $('[name="email"]').val() == '') {
-        //     return false
-        // }
+        
         $(`.step-${page}`).show()
         Pace.start();
         btn_direct()
@@ -210,7 +310,7 @@
           dataType: "JSON",
           data: {},
           success: function(data) {
-            //   console.log(data[0]['price'])
+            arr_barang = data;
             $.each(data.content, function( i, v ) {
                 $('.body-tb').append(`
                     <tr class="tr-tb fadeIn animated">
@@ -245,6 +345,23 @@
         
     }
 
+    function getbank() {
+        $.ajax({
+	        url: `<?php echo base_url() ?>billing/getbank`,
+	        type: "GET",
+	        dataType: "JSON",
+	        success: function(data) {
+                let arr = data;
+                getselect('#bank', 'kelasbank', 'kode', 'nama',arr)
+                $(`#bank`).attr('readonly', false);
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Error on process');
+                $(`#bank`).attr('readonly', false);
+	        }
+	    });
+    }
+
     function getprov() {
 	    $(`#provinsi`).attr('readonly', true);
         $.ajax({
@@ -264,6 +381,9 @@
     }
 
     function getcity() {
+        $('#biaya').val('')
+        $('#kodekurir').val('')
+        $('#service').val('')
         let kodeprovinsi = $(`#provinsi`).val()
         $(`#kota`).attr('readonly', true);
         $.ajax({
@@ -294,6 +414,7 @@
                 let arr = data.rajaongkir.results[0].costs;
                 getselect('#service', 'kelasservice', 'service', 'description', arr)
                 console.log(arr)
+                $(`#arr_service`).val(JSON.stringify(arr));
 	            $(`#service`).attr('readonly', false);
 	        },
 	        error: function(jqXHR, textStatus, errorThrown) {
@@ -301,6 +422,23 @@
                 $(`#service`).attr('readonly', false);
 	        }
 	    });
+    }
+
+    function getongkir() {
+        $('#biaya').val('')
+        $('#kodekurir').val('')
+        if ($('#service').val() != '') {
+            let arr = $(`#arr_service`).val()
+            let arr_parse = JSON.parse(arr)
+            let i = _.findIndex(arr_parse, {
+                'service': $('#service').val(),
+            })
+            let ongkos  = (arr_parse[i].cost[0].value); 
+            let etd     = (arr_parse[i].cost[0].etd); 
+            $('#biaya').val(ongkos)
+            $('#kodekurir').val(arr_parse[i].service)
+        } 
+        
     }
 
     function getselect(prop, classoption, val, caption, arr) {

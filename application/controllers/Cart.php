@@ -28,6 +28,7 @@ class Cart extends CI_Controller
                 msatbrg.konv,
                 msatbrg.ket,
                 msatbrg.harga,
+                msatbrg.beratkg,
                 msatbrg.def,
                 mbarang. ID idbarang,
                 mbarang.kode kodebarang,
@@ -58,7 +59,8 @@ class Cart extends CI_Controller
             'qty'     => 1,
             'price'   => $res->harga,
             'name'    => $res->namabarang,
-            'image'   => $res->gambardesign
+            'image'   => $res->gambardesign,
+            'berat'   => $res->beratkg,
         );
         
         $result = $this->cart->insert($data);

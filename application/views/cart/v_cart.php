@@ -76,6 +76,7 @@
     </div>
     
     <?php $this->load->view('_partials/foot.php'); ?>
+    <script src="<?php echo base_url()?>assets/pace/pace.js"></script>
     
 </body>
 <script>

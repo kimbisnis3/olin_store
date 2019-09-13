@@ -65,10 +65,44 @@ class Order extends CI_Controller
         echo json_encode(array('data' => $result));
     }
 
-    public function savedata()
+    public function savedata() 
+    {
+        $kodeOrder = 'xx';
+        foreach ($this->cart->contents() as $r) {
+            $Brg = $this->db->query("
+            SELECT 
+                msatbrg.kode msatbrg_kode,
+                msatbrg.ref_brg msatbrg_ref_brg,
+                msatbrg.harga msatbrg_harga,
+                msatbrg.ref_gud msatbrg_ref_gud,
+                msatbrg.ket msatbrg_ket
+            FROM 
+                mbarang 
+            LEFT JOIN msatbrg ON msatbrg.ref_brg = mbarang.kode 
+            WHERE 
+                msatbrg.def = 't' 
+            AND mbarang.kode = '".$r['id']."'")->row();
+            $rowb['useri']     = $this->session->userdata('user');
+            $rowb['ref_order'] = $kodeOrder;
+            $rowb['ref_brg']   = $Brg->msatbrg_ref_brg;
+            $rowb['jumlah']    = $r['qty'];
+            $rowb['harga']     = $r['price'];
+            $rowb['ref_satbrg']= $Brg->msatbrg_kode;
+            $rowb['ref_gud']   = $Brg->msatbrg_ref_gud;
+            $rowb['ket']       = $Brg->msatbrg_ket;
+            $b[] = $rowb;
+        }
+        echo json_encode($b);
+    }
+
+    public function savedatax()
     {   
         $this->db->trans_begin();
-        $a['ref_cust']  = $this->input->post('ref_cust');
+        $provfrom = '10';
+        $cityfrom = '445';
+        $prov     = 'Jawa Tengah';
+        $city     = 'Surakarta (Solo)';
+        $a['ref_cust']  = $this->session->userdata('ref_cust');
         $a['tgl']       = 'now()';
         $a['ref_gud']   = $this->libre->gud_def();
         $a['ket']       = $this->input->post('ket');
@@ -76,22 +110,22 @@ class Order extends CI_Controller
         $a['ref_layanan'] = $this->input->post('ref_layanan');
         $a['kirimke']   = $this->input->post('kirimke');
         $a['alamat']    = $this->input->post('alamat');
-        if ($this->input->post('ref_kirim') == 'GX0002') {    
-            $a['kodeprovfrom']  = $this->input->post('provinsi');
+        // if ($this->input->post('ref_kirim') == 'GX0002') {    
+            $a['kodeprovfrom']  = $provfrom ;
+            $a['kodecityfrom']  = $cityfrom;
             $a['kodeprovto']    = $this->input->post('provinsito');
-            $a['kodecityfrom']  = $this->input->post('city');
             $a['kodecityto']    = $this->input->post('cityto');
-            $a['lokasidari']= $this->input->post('mask-provinsi').' - '.$this->input->post('mask-city');
-            $a['lokasike']  = $this->input->post('mask-provinsito').' - '.$this->input->post('mask-cityto');
-            $a['kgkirim']   = $this->input->post('berat');
-            $a['bykirim']   = $this->input->post('biaya');
-            $a['kodekurir'] = $this->input->post('kodekurir');
-            $a['kurir']     = $this->input->post('kurir');
-        }
+            $a['lokasidari']    = $prov.' - '.$city;
+            $a['lokasike']      = $this->input->post('maskprovinsito').' - '.$this->input->post('maskcityto');
+            $a['kgkirim']       = $this->input->post('berat');
+            $a['bykirim']       = $this->input->post('biaya');
+            $a['kodekurir']     = $this->input->post('kodekurir');
+            $a['kurir']         = $this->input->post('kurir');
+        // }
         $this->db->insert('xorder',$a);
 
-        $idOrder = $this->db->insert_id();
-        $kodeOrder = $this->db->get_where('xorder',array('id' => $idOrder))->row()->kode;
+        $idOrder    = $this->db->insert_id();
+        $kodeOrder  = $this->db->get_where('xorder',array('id' => $idOrder))->row()->kode;
         $kodebrg    = $this->input->post('kodebrg');
         $arr_produk = $this->input->post('arr_produk');
         foreach (json_decode($arr_produk) as $r) {

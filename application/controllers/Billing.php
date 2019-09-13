@@ -16,6 +16,11 @@ class Billing extends CI_Controller {
         $data['menuaktif'] = $this->menuaktif;
         $this->load->view($this->indexpage,$data);
     }
+
+    function getbank() {
+        $result = $this->db->get('mbank')->result();
+        echo json_encode($result); 
+    }
     
     function getprov() {
         $response = $this->libre->get_province_ro();
