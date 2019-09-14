@@ -97,13 +97,13 @@
                     <div class="row" style="margin-bottom: 20px !important;">
                         <div class="col-md-6">
                             <label for="">Provinsi</label>
-                            <select class="form-control" name="provinsi" id="provinsi" onchange="getcity()">
+                            <select class="form-control input-kurir" name="provinsi" id="provinsi" onchange="getcity()">
                                 <option value="">-</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="">Kota</label>
-                            <select class="form-control" name="kota" id="kota" onchange="changecity()">
+                            <select class="form-control input-kurir" name="kota" id="kota" onchange="changecity()">
                                 <option value="">-</option>
                             </select>
                         </div>
@@ -117,7 +117,7 @@
                     <div class="row" style="margin-bottom: 20px !important;">
                         <div class="col-md-4">
                             <label for="">Kurir</label>
-                            <select class="form-control" name="kurir" id="kurir" onchange="getservice()">
+                            <select class="form-control input-kurir" name="kurir" id="kurir" onchange="getservice()">
                                 <option value="">-</option>
                                 <option value="jne">JNE</option>
                                 <option value="tiki">TIKI</option>
@@ -126,15 +126,36 @@
                         </div>
                         <div class="col-md-4">
                             <label for="">Service</label>
-                            <select class="form-control" name="service" id="service" onchange="getongkir()">
+                            <select class="form-control input-kurir" name="service" id="service" onchange="getongkir()">
                                 <option value="">-</option>
                             </select>
-                            <input type="hidden" class="form-control" name="arr_service" id="arr_service"/>
+                            <input type="hidden" class="form-control input-kurir" name="arr_service" id="arr_service"/>
                         </div>
                         <div class="col-md-4">
-                            <label for="">Biaya Kirim Per KG</label>
-                            <input type="text" class="form-control" name="biaya" id="biaya" readonly="true"/>
-                            <input type="hidden" class="form-control" name="kodekurir" id="kodekurir" readonly="true"/>
+                            <label for="">Biaya Kirim</label>
+                            <input type="text" class="form-control input-kurir" name="biaya" id="biaya" readonly="true"/>
+                            <!-- <input type="hidden" class="form-control" name="kodekurir" id="kodekurir" readonly="true"/>
+                            <input type="text" class="form-control" name="berattotal" id="berattotal" readonly="true"/> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="row" style="margin-bottom: 20px !important;">
+                        <div class="col-md-4">
+                            <label for="">Kode Kurir</label>
+                            <input type="text" class="form-control input-kurir" name="kodekurir" id="kodekurir" readonly="true"/>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Total Berat</label>
+                            <input type="text" class="form-control" name="berattotal" id="berattotal" readonly="true"/>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Total Cart</label>
+                            <input type="text" class="form-control" name="carttotal" id="carttotal" readonly="true"/>
                         </div>
                     </div>
                 </div>
@@ -180,6 +201,20 @@
                         <td></td>
                         <td align="center">Total</td>
                         <td class="total-cart" align="right"> </td>
+                    </tr>
+                    <tr class="tr-total">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td align="center">Biaya Kirim</td>
+                        <td class="bykirim" align="right"> </td>
+                    </tr>
+                    <tr class="tr-total">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td align="center">Total Biaya</td>
+                        <td class="totbiaya" align="right"> </td>
                     </tr>
                 </tbody>
             </table>
@@ -249,13 +284,13 @@
                 alamat_penerima : $('[name="alamat_penerima"]').val() ,
                 provinsito      : $('[name="provinsi"]').val(),
                 cityto          : $('[name="kota"]').val(),
-                maskprovinsito  : $('[name="provinsi"]').html(),
-                maskcityto      : $('[name="kota"]').html(),
-                kgkirim         : $('[name="kgkirim"]').val(),
+                maskprovinsito  : $('[name="provinsi"] option:selected').html(),
+                maskcityto      : $('[name="kota"] option:selected').html(),
+                kgkirim         : $('[name="berattotal"]').val(),
                 bykirim         : $('[name="biaya"]').val(),
                 kodekurir       : $('[name="kodekurir"]').val(),
                 kurir           : $('[name="kurir"]').val(),
-                arr_produk      : arr_barang.content
+                // arr_produk      : arr_barang.content
             },
 	        success: function(data) {
                 console.log('sukses')
@@ -294,7 +329,6 @@
         }
 
         let page_ongkir = 2; 
-
         if(page == page_ongkir && $('[name="layanan"]').val() == '') {
             $('[name="layanan"]').focus()
             showNotif('Perhatian', 'Lengkapi Data', 'warning')
@@ -327,13 +361,34 @@
             return false
         }
 
+        let page_bank = 3; 
+        if(page == page_bank && $('[name="bank"]').val() == '') {
+            $('[name="bank"]').focus()
+            showNotif('Perhatian', 'Lengkapi Data', 'warning')
+            return false
+        }
+
         if(page != maxpage) {
             page = page + 1
             $(`.step`).hide()
         }
-        
+
+        if(page == maxpage) {
+            $('.btn-next').addClass('invisible')
+        } else {
+            $('.btn-next').removeClass('invisible')
+        }
+
+
+        let b = $('#biaya').val()
+        let bykirim = b.length == 0 ? 0 : parseInt(b)
+        let tot_cart = $('#carttotal').val()
+        $('.bykirim').html(`Rp.${numeral(bykirim).format('0,0')}`)
+        let t = bykirim + parseInt(tot_cart)
+        $('.totbiaya').html(`Rp.${numeral(t).format('0,0')}`)
         $(`.step-${page}`).show()
-        Pace.start();
+
+        Pace.start()
         btn_direct()
     }
 
@@ -378,6 +433,8 @@
 
             });
             total_cart(data.total_price)
+            $('#berattotal').val(data.berattotal)
+            $('#carttotal').val(data.total_price)
           },
           error: function(jqXHR, textStatus, errorThrown) {
                 console.log('gagal')
@@ -401,13 +458,16 @@
 
     function changekirim() {
         let kode = $('#kirim').val();
-        let label= $('#kirim option:selected').html();
+        let label = $('#kirim option:selected').html();
         if ((kode == 'GX0002') || (label == 'kurir')) {
-          $('.box-kurir').removeClass('invisible');
+            $('.box-kurir').removeClass('invisible');
         } else {
-          $('.box-kurir').addClass('invisible');
+            $('.box-kurir').addClass('invisible');
+            $('.input-kurir').val('');
+            $('.kelaskota').remove('')
+            $('.kelasservice').remove('')
         }
-      }
+    }
 
     function getbank() {
         $(`#bank`).attr('readonly', true);
@@ -496,20 +556,25 @@
         $('#service').val('')
         let kodeprovinsi = $(`#provinsi`).val()
         $(`#kota`).attr('readonly', true);
-        $.ajax({
-	        url: `<?php echo base_url() ?>billing/getcity?provincecode=${kodeprovinsi}`,
-	        type: "GET",
-	        dataType: "JSON",
-	        success: function(data) {
-                let arr = data.rajaongkir.results;
-                getselect('#kota', 'kelaskota', 'city_id', 'city_name', arr)
-	            $(`#kota`).attr('readonly', false);
-	        },
-	        error: function(jqXHR, textStatus, errorThrown) {
-                console.log('Error on process');
-                $(`#kota`).attr('readonly', false);
-	        }
-	    });
+        if ($('#provinsi').val().length != 0) {
+            $.ajax({
+                url: `<?php echo base_url() ?>billing/getcity?provincecode=${kodeprovinsi}`,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data) {
+                    let arr = data.rajaongkir.results;
+                    getselect('#kota', 'kelaskota', 'city_id', 'city_name', arr)
+                    $(`#kota`).attr('readonly', false);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log('Error on process');
+                    $(`#kota`).attr('readonly', false);
+                }
+            });
+        } else {
+            console.log('empty')
+        }
+        
     }
 
     function getservice() {
@@ -523,7 +588,6 @@
 	        success: function(data) {
                 let arr = data.rajaongkir.results[0].costs;
                 getselect('#service', 'kelasservice', 'service', 'description', arr)
-                console.log(arr)
                 $(`#arr_service`).val(JSON.stringify(arr));
 	            $(`#service`).attr('readonly', false);
 	        },
@@ -545,7 +609,8 @@
             })
             let ongkos  = (arr_parse[i].cost[0].value); 
             let etd     = (arr_parse[i].cost[0].etd); 
-            $('#biaya').val(ongkos)
+            let berattotal = $('#berattotal').val()
+            $('#biaya').val(ongkos * berattotal)
             $('#kodekurir').val(arr_parse[i].service)
         } 
         

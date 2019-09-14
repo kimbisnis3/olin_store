@@ -102,6 +102,11 @@
         $('.total-cart').html(`Rp.${numeral(x).format('0,0')}`)
     }
 
+    function total_biaya(x)
+    {
+        $('.total-biaya').html(`Rp.${numeral(x).format('0,0')}`)
+    }
+
 	function select2() {
 	    $('.select2').select2({
 	        placeholder: 'Select an option',

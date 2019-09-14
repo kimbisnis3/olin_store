@@ -72,11 +72,16 @@ class Cart extends CI_Controller
 
     function content_cart()
     {
+        $berat = 0;
+        foreach($this->cart->contents() as $i => $v) {
+            $berat += $v['berat'] * $v['qty'];
+        }
         echo json_encode(
             array(
-                'content' => $this->cart->contents(), 
+                'content'     => $this->cart->contents(), 
                 'total_items' => $this->cart->total_items(), 
                 'total_price' => $this->cart->total(), 
+                'berattotal'  => $berat 
         ));
     }
 

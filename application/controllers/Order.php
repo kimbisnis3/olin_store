@@ -90,38 +90,39 @@ class Order extends CI_Controller
 
     public function savedata() 
     {
-        $kodeOrder = 'xx';
-        foreach ($this->cart->contents() as $r) {
-            $Brg = $this->db->query("
-            SELECT 
-                msatbrg.kode msatbrg_kode,
-                msatbrg.ref_brg msatbrg_ref_brg,
-                msatbrg.harga msatbrg_harga,
-                msatbrg.ref_gud msatbrg_ref_gud,
-                msatbrg.ket msatbrg_ket
-            FROM 
-                mbarang 
-            LEFT JOIN msatbrg ON msatbrg.ref_brg = mbarang.kode 
-            WHERE 
-                msatbrg.def = 't' 
-            AND mbarang.kode = '".$r['id']."'")->row();
-            $rowb['useri']     = $this->session->userdata('user');
-            $rowb['ref_order'] = $kodeOrder;
-            $rowb['ref_brg']   = $Brg->msatbrg_ref_brg;
-            $rowb['jumlah']    = $r['qty'];
-            $rowb['harga']     = $r['price'];
-            $rowb['ref_satbrg']= $Brg->msatbrg_kode;
-            $rowb['ref_gud']   = $Brg->msatbrg_ref_gud;
-            $rowb['ket']       = $Brg->msatbrg_ket;
-            $b[] = $rowb;
-        }
-        // echo json_encode($b);
-        echo json_encode(
-            array(
-                'content' => $b, 
-                'total_items' => $this->cart->total_items(), 
-                'total_price' => $this->cart->total(), 
-        ));
+        // $kodeOrder = 'xx';
+        // foreach ($this->cart->contents() as $r) {
+        //     $Brg = $this->db->query("
+        //     SELECT 
+        //         msatbrg.kode msatbrg_kode,
+        //         msatbrg.ref_brg msatbrg_ref_brg,
+        //         msatbrg.harga msatbrg_harga,
+        //         msatbrg.ref_gud msatbrg_ref_gud,
+        //         msatbrg.ket msatbrg_ket
+        //     FROM 
+        //         mbarang 
+        //     LEFT JOIN msatbrg ON msatbrg.ref_brg = mbarang.kode 
+        //     WHERE 
+        //         msatbrg.def = 't' 
+        //     AND mbarang.kode = '".$r['id']."'")->row();
+        //     $rowb['useri']     = $this->session->userdata('user');
+        //     $rowb['ref_order'] = $kodeOrder;
+        //     $rowb['ref_brg']   = $Brg->msatbrg_ref_brg;
+        //     $rowb['jumlah']    = $r['qty'];
+        //     $rowb['harga']     = $r['price'];
+        //     $rowb['ref_satbrg']= $Brg->msatbrg_kode;
+        //     $rowb['ref_gud']   = $Brg->msatbrg_ref_gud;
+        //     $rowb['ket']       = $Brg->msatbrg_ket;
+        //     $b[] = $rowb;
+        // }
+        // // echo json_encode($b);
+        // echo json_encode(
+        //     array(
+        //         'content' => $b, 
+        //         'total_items' => $this->cart->total_items(), 
+        //         'total_price' => $this->cart->total(), 
+        // ));
+        echo json_encode($this->input->post());
     }
 
     public function savedatax()
@@ -139,7 +140,7 @@ class Order extends CI_Controller
         $a['ref_layanan'] = $this->input->post('ref_layanan');
         $a['kirimke']   = $this->input->post('kirimke');
         $a['alamat']    = $this->input->post('alamat');
-        // if ($this->input->post('ref_kirim') == 'GX0002') {    
+        if ($this->input->post('ref_kirim') == 'GX0002') {    
             $a['kodeprovfrom']  = $provfrom ;
             $a['kodecityfrom']  = $cityfrom;
             $a['kodeprovto']    = $this->input->post('provinsito');
@@ -150,7 +151,7 @@ class Order extends CI_Controller
             $a['bykirim']       = $this->input->post('biaya');
             $a['kodekurir']     = $this->input->post('kodekurir');
             $a['kurir']         = $this->input->post('kurir');
-        // }
+        }
         $this->db->insert('xorder',$a);
 
         $idOrder    = $this->db->insert_id();
