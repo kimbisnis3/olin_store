@@ -245,6 +245,28 @@
           $(prop).html(`${label_old_btn}`);
       }
 	}
+
+	function ceknull(x) {
+	    if ($('[name="' + x + '"]').val() == '' || $('[name="' + x + '"]').val() == null) {
+			showNotif('', 'Kolom '+ x +' Wajib Diisi', 'danger');
+	        $('[name="' + x + '"]').focus()
+	        return true
+			$('.btn-save').prop('disabled',false);
+	    } else {
+	        return false
+	    }
+	}
+
+	function cekzero(x) {
+	    if ($('[name="' + x + '"]').val() <= '0' || $('[name="' + x + '"]').val() <= 0 || $('[name="' + x + '"]').val() == null) {
+			showNotif('', 'Kolom '+ x +' Wajib Diisi', 'danger');
+	        $('[name="' + x + '"]').focus()
+	        return true
+			$('.btn-save').prop('disabled',false);
+	    } else {
+	        return false
+	    }
+	}
 	  
 
 </script>

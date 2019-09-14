@@ -18,7 +18,8 @@ class Payment extends CI_Controller
     function index()
     {
         $data['menuaktif'] = $this->menuaktif;
-        $this->load->view($this->indexpage,$data);
+        $data['jenisbayar'] = $this->db->get('mjenbayar')->result();
+        $this->load->view($this->indexpage,$data);  
     }
 
     public function getall(){
@@ -74,24 +75,24 @@ class Payment extends CI_Controller
     {   
         $this->db->trans_begin();
         $a['useri']     = $this->session->userdata('username');
-        $a['ref_cust']  = $this->input->post('ref_cust');
+        $a['ref_cust']  = $this->session->userdata('kodecust');
         $a['tgl']       = date('Y-m-d', strtotime($this->input->post('tgl')));
         $a['total']     = $this->input->post('total');
         $a['bayar']     = $this->input->post('bayar');
         $a['ket']       = $this->input->post('ket');
         $a['ref_jual']  = $this->input->post('ref_order');
-        $a['ref_jenbayar']  = $this->input->post('ref_jenbayar');
+        $a['ref_jenbayar']  = $this->input->post('ref_jenbayar_mask');
         $a['ref_gud']   = $this->libre->gud_def();
         $a['posted']    = 'f';
 
-        $this->db->insert('xpelunasan',$a);
-        $idpelun    = $this->db->insert_id();
-        $kodepelun  = $this->db->get_where('xpelunasan',array('id' => $idpelun))->row()->kode;
-        $kodeunik   = $this->db->get_where('xpelunasan',array('id' => $idpelun))->row()->kodeunik;
+        $result = $this->db->insert('xpelunasan',$a);
+        $idpelun = $this->db->insert_id();
+        $kodepelun = $this->db->get_where('xpelunasan',array('id' => $idpelun))->row()->kode;
+        $kodeunik = $this->db->get_where('xpelunasan',array('id' => $idpelun))->row()->kodeunik;
         $dataOrderd = $this->db->get_where('xorderd',array('ref_order' => $this->input->post('ref_order')))->result();
         foreach ($dataOrderd as $r) {
             $row    = array(
-                "useri"     => $this->session->userdata('username'),
+                "useri"     => $this->session->userdata(prefix_sess().'username'),
                 "ref_pelun" => $kodepelun,
                 "ref_brg"   => $r->ref_brg,
                 "jumlah"    => $r->jumlah,
@@ -101,11 +102,11 @@ class Payment extends CI_Controller
             );
             $b[] = $row;
         }
-        $this->db->insert_batch('xpelunasand',$b);
+        $result = $this->db->insert_batch('xpelunasand',$b);
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
             $r = array(
-                'sukses' => 'fail', 
+                'sukses' => 'fail'
             );
         }
         else {
@@ -165,29 +166,33 @@ class Payment extends CI_Controller
     }
 
     public function getorder(){
-        $q = "select qr.*, (qr.total - qr.dibayar) kurang from (
-                select 
-                xorder.id,
-                xorder.kode,
-                xorder.tgl,
-                xorder.ket,
-                xorder.pic,
-                xorder.kgkirim,
-                xorder.bykirim,
-                xorder.ref_cust,
-                xorder.ref_kirim,
-                mcustomer.nama mcustomer_nama,
-                case xorder.ref_kirim 
-                when 'GX0002' then xorder.total
-                when 'GX0001' then xorder.total - xorder.bykirim
-                end as total,
-                (select sum(xpelunasan.bayar) from xpelunasan
-                where xpelunasan.void is not true 
-                and xpelunasan.ref_jual = xorder.kode) dibayar
-                from xorder
-                join mcustomer on mcustomer.kode = xorder.ref_cust
-                ) qr
-                where (qr.total - qr.dibayar) > 0";
+        $kodecust = $this->session->userdata('kodecust');
+        $q = "select qr.*, (COALESCE(qr.total,0))- (COALESCE(qr.dibayar,0)) kurang
+            from (
+            select 
+            xorder.id,
+            xorder.kode,
+            xorder.tgl,
+            xorder.ket,
+            xorder.pic,
+            xorder.kgkirim,
+            xorder.bykirim,
+            xorder.ref_cust,
+            xorder.ref_kirim,
+            mcustomer.nama mcustomer_nama,
+            case xorder.ref_kirim 
+            when 'GX0002' then xorder.total
+            when 'GX0001' then xorder.total - xorder.bykirim
+            end as total,
+            (select sum(xpelunasan.bayar) from xpelunasan
+            where xpelunasan.void is not true 
+            and xpelunasan.ref_jual = xorder.kode) dibayar
+            from xorder
+            join mcustomer on mcustomer.kode = xorder.ref_cust
+            ) qr
+            where (qr.total - (COALESCE(qr.dibayar,0))) > 0
+            AND qr.ref_cust ='$kodecust'";
+            
         $result     = $this->db->query($q)->result();
         $list       = [];
         foreach ($result as $i => $r) {

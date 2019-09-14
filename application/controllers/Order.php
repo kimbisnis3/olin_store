@@ -51,18 +51,41 @@ class Order extends CI_Controller
             LEFT JOIN mkirim ON mkirim.kode = xorder.ref_kirim
             LEFT JOIN mlayanan ON mlayanan.kode = xorder.ref_layanan
             WHERE xorder.void IS NOT TRUE";
-
-        if ($filterawal || $filterakhir) {
-            $q .= " AND
+        if ($filterawal && $filterakhir) {
+            $q .= "  AND
                     xorder.tgl 
                 BETWEEN '$filterawal' AND '$filterakhir'";
         }
+
         if ($kodecust) {
             $q .= " AND ref_cust = '$kodecust'";
         }
         $q .=" ORDER BY xorder.id DESC" ;
         $result     = $this->db->query($q)->result();
-        echo json_encode(array('data' => $result));
+        $list       = [];
+        foreach ($result as $i => $r) {
+            $row['no']      = $i + 1;
+            $row['id']          = $r->id;
+            $row['kode']        = $r->kode;
+            $row['tgl']         = normal_date($r->tgl);
+            $row['namacust']    = $r->namacust;
+            $row['kgkirim']     = $r->kgkirim;
+            $row['bykirim']     = number_format($r->bykirim);
+            $row['mkirim_nama'] = $r->mkirim_nama." - ".strtoupper($r->kurir);
+            $row['lokasidari']  = $r->lokasidari;
+            $row['lokasike']    = $r->lokasike;
+            $row['ket']         = $r->ket;
+            $row['pathcorel']   = $r->pathcorel;
+            $row['pathimage']   = $r->pathimage;
+            $row['kirimke']     = $r->kirimke;
+            $row['mlayanan_nama']= $r->mlayanan_nama;
+            $row['status']      = statuspo($r->status);
+            $row['jmlorder']    = $r->jmlorder;
+            $row['orderdone']   = $r->orderdone;
+            $row['statusorder'] = ($r->orderdone == $r->jmlorder) ? '<span class="label label-success">Selesai Semua</span>' : '<span class="label label-warning">Belum Selesai</span>' ;
+            $list[] = $row;
+        }   
+        echo json_encode(array('data' => $list));
     }
 
     public function savedata() 

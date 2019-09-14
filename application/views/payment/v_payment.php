@@ -1,130 +1,176 @@
 <!DOCTYPE html>
 <html>
 <?php $this->load->view('_partials/head.php'); ?>
-<body class="fadeIn animated"> 
-    <?php $this->load->view('_partials/topbar.php'); ?>
-    <div class="modal fade" id="modal-data" role="dialog" data-backdrop="static">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title text-hijau"></h4>
-              </div>
-              <div class="modal-body">
-                <div class="box-body pad">
-                  <form id="form-data">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label>Pesanan</label>
-                              <input type="hidden" name="kode">
-                              <div class="input-group">
-                                <input type="text" class="form-control" name="ref_order" readonly="true">
-                                <div class="input-group-btn">
-                                  <button type="button" class="btn btn-primary btn-flat" onclick="open_order()"><i class="fa fa-table"></i></button>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label>Total</label>
-                              <input type="text" class="form-control" name="total" readonly="true">
-                              <input type="text" class="form-control invisible" name="kurang" readonly="true">
-                            </div>
-                            <div class="form-group">
-                              <label>Jenis Bayar</label>
-                              <select class="form-control select2" name="ref_jenbayar" onchange="jenisbayar()">
-                                <option> - </option>
-                                <?php foreach ($jenisbayar as $i => $v): ?>
-                                <option value="<?php echo $v->kode ?>"><?php echo $v->nama; ?></option>
-                                <?php endforeach ?>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-6">    
-                            <div class="form-group">
-                              <label>Tanggal</label>
-                              <input type="text" class="form-control datepicker" name="tgl">
-                            </div>
-                            <div class="form-group">
-                              <label>Bayar</label>
-                              <input type="number" class="form-control" name="bayar" id="bayar">
-                            </div>
-                            <div class="form-group">
-                              <label>Keterangan</label>
-                              <input type="text" class="form-control" name="ket">
-                            </div>
+<body class="fadeIn animated">
+  <?php $this->load->view('_partials/topbar.php'); ?>
+  <div class="modal fade" id="modal-data" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-hijau"></h4>
+        </div>
+        <div class="modal-body">
+          <div class="box-body pad">
+            <form id="form-data">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Pesanan</label>
+                        <input type="hidden" name="kode">
+                        <div class="input-group">
+                          <input type="text" class="form-control" name="ref_order" readonly="true">
+                          <div class="input-group-btn">
+                            <button type="button" class="btn btn-primary btn-flat" onclick="open_order()"><i class="fa fa-table"></i></button>
                           </div>
                         </div>
                       </div>
+                      <div class="form-group">
+                        <label>Total</label>
+                        <input type="text" class="form-control" name="total" readonly="true">
+                        <input type="text" class="form-control invisible" name="kurang" readonly="true">
+                      </div>
+                      <div class="form-group">
+                        <label>Jenis Bayar</label>
+                        <select class="form-control select2" name="ref_jenbayar" onchange="jenisbayar()">
+                          <option value=""> - </option>
+                          <?php foreach ($jenisbayar as $i => $v): ?>
+                          <option value="<?php echo $v->kode ?>"><?php echo $v->nama; ?></option>
+                          <?php endforeach ?>
+                        </select>
+                        <input type="hidden" class="form-control" name="ref_jenbayar_mask">
+                      </div>
                     </div>
-                  </form>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Tanggal</label>
+                        <input type="text" class="form-control datepicker" name="tgl">
+                      </div>
+                      <div class="form-group">
+                        <label>Bayar</label>
+                        <input type="number" class="form-control" name="bayar" id="bayar">
+                      </div>
+                      <div class="form-group">
+                        <label>Keterangan</label>
+                        <input type="text" class="form-control" name="ket">
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-oren btn-flat" data-dismiss="modal">Batal</button>
-                <button type="button" id="btnSave" onclick="savedata()" class="btn btn-biru btn-flat">Simpan</button>
-              </div>
-            </div>
+            </form>
           </div>
-        </div>  <!-- END MODAL INPUT-->
-    <div class="breadcrumbs" style="margin-bottom: 25px !important;">
-        <div class="container">
-            <div class="breadcrumbs-main">
-                <ol class="breadcrumb">
-                    <li><a href="<?php echo base_url() ?>">Home</a></li>
-                    <li class="active">Payment</li>
-                </ol>
-            </div>
         </div>
-    </div>
-    <div class="container" style="margin-top: 25px !important">
-        <div class="ckeck-top heading">
-            <h2 class="judul-page">Payment</h2>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-oren btn-flat" data-dismiss="modal">Batal</button>
+          <button type="button" id="btnSave" onclick="savedata()" class="btn btn-biru btn-flat">Simpan</button>
         </div>
+      </div>
     </div>
-    <div class="konten">
-        
-    </div>
-	<div class="konten">
-        <div class="container" style="margin-bottom: 20px !important;">
-            <div class="row">
-                <button class="btn btn-teal btn-flat" onclick="add_data()"><i class="fa fa-plus"></i> Pembayaran</button>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <table id="table" class="table-custom" cellspacing="0" width="100%">
+    </div>  <!-- END MODAL INPUT-->
+    <div class="modal fade" id="modal-order" role="dialog" data-backdrop="static">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Daftar Order</h4>
+          </div>
+          <div class="modal-body">
+                <div class="table-responsive mailbox-messages">
+                  <table id="table-order" class="table-custom" cellspacing="0" width="100%">
                     <thead>
-                        <tr>
-                            <th></th>
-                            <th width="5%">No</th>
-                            <th>ID</th>
-                            <th>Kode</th>
-                            <th>Posted</th>
-                            <th>Tanggal</th>
-                            <th>Agen</th>
-                            <th>Kode PO</th>
-                            <th>Jenis Bayar</th>
-                            <th>Bayar</th>
-                            <th>Keterangan</th>
-                            <th>Kode Unik</th>
-                        </tr>
+                      <tr>
+                        <th width="5%">No</th>
+                        <th>ID</th>
+                        <th>Kode</th>
+                        <th>Ref Cust</th>
+                        <th>Agen</th>
+                        <th>Tanggal</th>
+                        <th>Total</th>
+                        <th>Dibayar</th>
+                        <th>Kurang</th>
+                        <th>Keterangan</th>
+                        <th>Opsi</th>
+                      </tr>
                     </thead>
                     <tbody>
                     </tbody>
-                </table>
-            </div>
+                  </table>
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning btn-flat" data-dismiss="modal">Tutup</button>
+          </div>
         </div>
-	</div>
-	<?php $this->load->view('_partials/foot.php'); ?>
-</body>
+      </div>
+      </div>  <!-- END MODAL ORDER-->
+      <div class="breadcrumbs" style="margin-bottom: 25px !important;">
+        <div class="container">
+          <div class="breadcrumbs-main">
+            <ol class="breadcrumb">
+              <li><a href="<?php echo base_url() ?>">Home</a></li>
+              <li class="active">Payment</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div class="container" style="margin-top: 25px !important">
+        <div class="ckeck-top heading">
+          <h2 class="judul-page">Payment</h2>
+        </div>
+      </div>
+      <div class="konten">
+        <div class="container" style="margin-bottom: 20px !important;">
+          <div class="row">
+            <button class="btn btn-teal btn-flat" onclick="add_data()"><i class="fa fa-plus"></i> Tambah</button>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <table id="table" class="table-custom" cellspacing="0" width="100%">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th width="5%">No</th>
+                  <th>ID</th>
+                  <th>Kode</th>
+                  <th>Posted</th>
+                  <th>Tanggal</th>
+                  <th>Agen</th>
+                  <th>Kode PO</th>
+                  <th>Jenis Bayar</th>
+                  <th>Bayar</th>
+                  <th>Keterangan</th>
+                  <th>Kode Unik</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <?php $this->load->view('_partials/foot.php'); ?>
+    </body>
 <script src="<?php echo base_url()?>assets/pace/pace.js"></script>
 <script>
+    var path = 'payment';
+    var apiurl = "<?php echo base_url('') ?>" + path;
     $(document).ready(function() {
         maindata()
     })
+
+    function jenisbayar() {
+      let ref_jenbayar = $('[name="ref_jenbayar"]').val()
+      let total = $('[name="kurang"]').val()
+      if (ref_jenbayar == 'GX0003') {
+        $('#bayar').val(total / 2)
+      } else if (ref_jenbayar == 'GX0001') {
+        $('#bayar').val(total)
+      }
+    }
 
     function maindata() {
         table = $('#table').DataTable({
@@ -137,7 +183,7 @@
                 }
             },
             "ajax": {
-                "url": `<?php echo base_url() ?>payment/getall`,
+                "url": `${apiurl}/getall`,
                 "type": "POST",
                 "data": {},
             },
@@ -206,27 +252,84 @@
         });
     }
 
+    function refresh() {
+      table.ajax.reload(null, false);
+      idx = -1;
+    }
+
     function add_data() {
-      state = 'add';
+        state = 'add';
+        $('#form-data')[0].reset();
+        setMonth('tgl',0);
+        if ('<?php echo $this->session->userdata('ref_jenc') ?>' == '2019000003' )
+        {
+          //customer biasa
+          $('[name="ref_jenbayar"]').val('GX0001')
+          $('[name="ref_jenbayar"]').attr('disabled', true)
+          $('[name="bayar"]').attr('readonly', true)
+        } else {
+          //reseller
+          $('[name="ref_jenbayar"]').val(null)
+          $('[name="ref_jenbayar"]').attr('disabled', false)
+          $('[name="bayar"]').attr('readonly', false)
+        }
+        $('#modal-data').modal('show');
+        $('.modal-title').text('Pembayaran');
+    }
+
+    function edit_data() {
+      kode = table.cell(idx, 3).data();
+      let validasiValue = table.cell(idx, 4).data();
+      if (validasiValue == 't') {
+        showNotif('Perhatian', 'Data Sudah Tervalidasi', 'warning')
+        return false;
+      }
+      if (idx == -1) {
+        return false;
+      }
+      state = 'update';
       $('#form-data')[0].reset();
-      setMonth('tgl',0);
-      $('#modal-data').modal('show');
-      $('.modal-title').text('Pembayaran');
-  }
+      $.ajax({
+        url: `${apiurl}/edit`,
+        type: "POST",
+        data: {
+          kode: kode,
+        },
+        dataType: "JSON",
+        success: function (data) {
+          $('[name="kode"]').val(data.kode);
+          $('[name="ref_cust"]').val(data.ref_cust);
+          $('[name="mcustomer_nama"]').val(data.mcustomer_nama);
+          $('[name="tgl"]').val(data.tgl);
+          $('[name="total"]').val(data.total);
+          $('[name="bayar"]').val(data.bayar);
+          $('[name="ket"]').val(data.ket);
+          $('[name="ref_order"]').val(data.ref_jual);
+          $('[name="ref_jenbayar"]').val(data.ref_jenbayar);
+          $('.select2').trigger('change');
+          $('#modal-data').modal('show');
+          $('.modal-title').text('Edit Data');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          showNotif('Fail', 'Internal Error', 'danger');
+        }
+      });
+    }
 
     function savedata() {
         if (ceknull('ref_order')) { return false }
-        if (ceknull('mcustomer_nama')) { return false }
         if (ceknull('tgl')) { return false }
         if (ceknull('ref_jenbayar')) { return false }
         if (cekzero('bayar')) { return false }
 
         let ref_jenbayar = $('[name="ref_jenbayar"]').val()
         let total = $('[name="kurang"]').val()
-        if (ref_jenbayar == 'GX0003' && $('#bayar').val() < (total / 2)) {
+        
+        if (('<?php echo $this->session->userdata('ref_jenc') ?>' == '2019000004') && (ref_jenbayar == 'GX0003') && ($('#bayar').val() < (total / 2))) {
             showNotif('Perhatian', 'Pembayaran Tidak Boleh Kurang dari 50%', 'danger');
             return false
         }
+        $('[name="ref_jenbayar_mask"]').val($('[name="ref_jenbayar"]').val())
         var url;
         $.ajax({
             url: `${apiurl}/savedata`,
@@ -269,14 +372,59 @@
     }
 
     function setMonth(name, days, tipe = '') {
-		if ((tipe == 'min') || ( tipe == '')) {
-			let date = moment().subtract(days, 'days').format("DD MMM YYYY");
-			$('[name="'+name+'"]').val(date)
-		} else if(tipe == 'plus') {
-			let date = moment().add(days, 'days').format("DD MMM YYYY");
-			$('[name="'+name+'"]').val(date)
-		}
-	}
+      if ((tipe == 'min') || (tipe == '')) {
+        let date = moment().subtract(days, 'days').format("DD MMM YYYY");
+        $('[name="' + name + '"]').val(date)
+      } else if (tipe == 'plus') {
+        let date = moment().add(days, 'days').format("DD MMM YYYY");
+        $('[name="' + name + '"]').val(date)
+      }
+    }
+
+  function open_order() {
+      $('#modal-order').modal('show');
+      tableorder = $('#table-order').DataTable({
+          "processing": true,
+          "destroy": true,
+          "ajax": {
+              "url": `${apiurl}/getorder`,
+              "type": "POST",
+              "data": {}
+          },
+          "columnDefs": [{
+              "targets": -1,
+              "data": null,
+              "defaultContent": "<button id='pilih-order' class='btn btn-sm btn-success btn-flat'><i class='fa fa-check'></i></button>"
+          }],
+          "columns": [
+            { "data": "no" }, 
+            { "data": "id" , "visible" : false},
+            { "data": "kode" , "visible" : true},
+            { "data": "ref_cust" , "visible" : false},
+            { "data": "mcustomer_nama" },
+            { "data": "tgl" },
+            { "data": "total" },
+            { "data": "dibayar" },
+            { "data": "kurang" },
+            { "data": "ket" },
+            { "data": "opsi" },
+          ]
+
+      });
+
+      $('#table-order tbody').on('click', '#pilih-order', function() {
+            var data = tableorder.row($(this).parents('tr')).data();
+            $('[name="ref_cust"]').val(data.ref_cust);
+            $('[name="mcustomer_nama"]').val(data.mcustomer_nama);
+            $('[name="ref_order"]').val(data.kode);
+            $('[name="kurang"]').val(data.kurang);
+            $('[name="total"]').val(data.total);
+            $('[name="bayar"]').val(parseInt(data.kurang));
+            // nilaimax('bayar',data.kurang)
+            $('#modal-order').modal('hide');
+        });
+
+    }
 
 </script>
 

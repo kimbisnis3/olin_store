@@ -34,7 +34,9 @@
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
     <style>
-    
-        
+        .selected {
+            background-color: #008B8B !important;
+            color: #ffffff !important;
+        }
     </style>		
 </head>

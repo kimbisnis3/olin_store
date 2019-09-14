@@ -18,6 +18,14 @@ class Billing extends CI_Controller {
         $this->load->view($this->indexpage,$data);
     }
 
+    function getlayanan() {
+        echo json_encode($this->db->get('mlayanan')->result()); 
+    }
+
+    function getkirim() {
+        echo json_encode($this->db->get('mkirim')->result()); 
+    }
+
     function getbank() {
         $result = $this->db->get('mbank')->result();
         echo json_encode($result); 

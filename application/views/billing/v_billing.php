@@ -68,23 +68,54 @@
                 </div>
                 <!-- <div class="col-md-2"></div> -->
             </div>
+        </div>
+
+        <div class="container step step-2">
             <div class="row">
-                <!-- <div class="col-md-2"></div> -->
-                <div class="col-md-12">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
                     <div class="row" style="margin-bottom: 20px !important;">
-                        <div class="col-md-3">
+                        <div class="col-md-6">
+                            <label for="">Layanan</label>
+                            <select class="form-control" name="layanan" id="layanan">
+                                <option value="">-</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Pengiriman</label>
+                            <select class="form-control" name="kirim" id="kirim" onchange="changekirim()">
+                                <option value="">-</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row box-kurir fadeIn animated">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="row" style="margin-bottom: 20px !important;">
+                        <div class="col-md-6">
                             <label for="">Provinsi</label>
                             <select class="form-control" name="provinsi" id="provinsi" onchange="getcity()">
                                 <option value="">-</option>
                             </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <label for="">Kota</label>
-                            <select class="form-control" name="kota" id="kota">
+                            <select class="form-control" name="kota" id="kota" onchange="changecity()">
                                 <option value="">-</option>
                             </select>
                         </div>
-                        <div class="col-md-3">
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row box-kurir fadeIn animated">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="row" style="margin-bottom: 20px !important;">
+                        <div class="col-md-4">
                             <label for="">Kurir</label>
                             <select class="form-control" name="kurir" id="kurir" onchange="getservice()">
                                 <option value="">-</option>
@@ -93,37 +124,42 @@
                                 <option value="pos">POS</option>
                             </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label for="">Service</label>
                             <select class="form-control" name="service" id="service" onchange="getongkir()">
                                 <option value="">-</option>
                             </select>
                             <input type="hidden" class="form-control" name="arr_service" id="arr_service"/>
                         </div>
-                    </div>
-                </div>
-                <!-- <div class="col-md-2"></div> -->
-            </div>
-            <div class="row">
-                <!-- <div class="col-md-2"></div> -->
-                <div class="col-md-12">
-                    <div class="row" style="margin-bottom: 20px !important;">
-                        <div class="col-md-3">
-                            <label for="">Biaya Kirim</label>
+                        <div class="col-md-4">
+                            <label for="">Biaya Kirim Per KG</label>
                             <input type="text" class="form-control" name="biaya" id="biaya" readonly="true"/>
                             <input type="hidden" class="form-control" name="kodekurir" id="kodekurir" readonly="true"/>
                         </div>
-                        <div class="col-md-3">
-                            <label for="">Bank</label>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+
+        <div class="container step step-3">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <div class="row" style="margin-bottom: 20px !important;">
+                        <div class="col-md-12">
+                            <label for="">Pilihan Bank</label>
                             <select class="form-control" name="bank" id="bank">
                                 <option value="">-</option>
                             </select>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4"></div>
             </div>
         </div>
-        <div class="container step step-2">
+
+        <div class="container step step-4">
 			<div class="row">
             <table class="table-custom">
                 <thead>
@@ -149,15 +185,16 @@
             </table>
             </div>
         </div>
-        <div class="container step step-3">
+        <div class="container step step-5">
             <!-- page konfimasi, kode unik  -->
+            <button class="btn btn-hijau btn-md btn-flat" onclick="savedata()"><i class="fa fa-check"></i> Konfirmasi</button>
         </div>
         <div class="containter btn-step" style="margin-top: 25px !important;">
             <div class="ckeck-top heading">
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-md btn-success btn-flat btn-prev" onclick="prev_page()"><i class="fa fa-arrow-left"></i> Sebelumnya</button>
-                        <button type="button" class="btn btn-md btn-success btn-flat btn-next" onclick="next_page()">Selanjutnya <i class="fa fa-arrow-right"></i></button>
+                        <button type="button" class="btn btn-md btn-hijau btn-flat btn-prev" onclick="prev_page()"><i class="fa fa-arrow-left"></i> Sebelumnya</button>
+                        <button type="button" class="btn btn-md btn-hijau btn-flat btn-next" onclick="next_page()">Selanjutnya <i class="fa fa-arrow-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -168,18 +205,19 @@
 <script src="<?php echo base_url()?>assets/pace/pace.js"></script>
 <script>
     var page = 1;
-    var maxpage = 3;
+    var maxpage = 5;
     var minpage = 1;
     var arr_barang = [];
     $(document).ready(function() {
+        getsessdata()
         initstep()
         load_cart()
         Pace.stop()
         btn_direct()
         getprov()
         getbank()
-        getsessdata()
-        console.log(arr_barang)
+        getlayanan()
+        getkirim()
     })
 
     function getsessdata() {
@@ -232,43 +270,58 @@
         Pace.stop();
       	Pace.bar.render();
         //validation form here
-        if(page == 1 && $('[name="nama_penerima"]').val() == '') {
+
+        let page_datakirim = 1; 
+        if(page == page_datakirim && $('[name="nama_penerima"]').val() == '') {
             $('[name="nama_penerima"]').focus()
             showNotif('Perhatian', 'Lengkapi Data', 'warning')
             return false
         }
-        if(page == 1 && $('[name="telp_penerima"]').val() == '') {
+        if(page == page_datakirim && $('[name="telp_penerima"]').val() == '') {
             $('[name="telp_penerima"]').focus()
             showNotif('Perhatian', 'Lengkapi Data', 'warning')
             return false
         }
-        if(page == 1 && $('[name="email_penerima"]').val() == '') {
+        if(page == page_datakirim && $('[name="email_penerima"]').val() == '') {
             $('[name="email_penerima"]').focus()
             showNotif('Perhatian', 'Lengkapi Data', 'warning')
             return false
         }
-        if(page == 1 && $('[name="alamat_penerima"]').val() == '') {
+        if(page == page_datakirim && $('[name="alamat_penerima"]').val() == '') {
             $('[name="alamat_penerima"]').focus()
             showNotif('Perhatian', 'Lengkapi Data', 'warning')
             return false
         }
 
-        if(page == 1 && $('[name="provinsi"]').val() == '') {
+        let page_ongkir = 2; 
+
+        if(page == page_ongkir && $('[name="layanan"]').val() == '') {
+            $('[name="layanan"]').focus()
+            showNotif('Perhatian', 'Lengkapi Data', 'warning')
+            return false
+        }
+        if(page == page_ongkir && $('[name="kirim"]').val() == '') {
+            $('[name="kirim"]').focus()
+            showNotif('Perhatian', 'Lengkapi Data', 'warning')
+            return false
+        }
+
+        if(page == page_ongkir && $('[name="provinsi"]').val() == '' && $('#kirim').val() == 'GX0002') {
             $('[name="provinsi"]').focus()
             showNotif('Perhatian', 'Lengkapi Data', 'warning')
             return false
         }
-        if(page == 1 && $('[name="kota"]').val() == '') {
+        if(page == page_ongkir && $('[name="kota"]').val() == '' && $('#kirim').val() == 'GX0002') {
             $('[name="kota"]').focus()
             showNotif('Perhatian', 'Lengkapi Data', 'warning')
             return false
         }
-        if(page == 1 && $('[name="kurir"]').val() == '') {
+        if(page == page_ongkir && $('[name="kurir"]').val() == '' && $('#kirim').val() == 'GX0002') {
             $('[name="kurir"]').focus()
             showNotif('Perhatian', 'Lengkapi Data', 'warning')
             return false
         }
-        if(page == 1 && $('[name="service"]').val() == '') {
+        if(page == page_ongkir && $('[name="service"]').val() == '' && $('#kirim').val() == 'GX0002') {
             $('[name="service"]').focus()
             showNotif('Perhatian', 'Lengkapi Data', 'warning')
             return false
@@ -300,6 +353,7 @@
         $(`.step-2`).hide()
         $(`.step-3`).hide()
         $(`.step-4`).hide()
+        $(`.step-5`).hide()
     }
 
     function load_cart() {
@@ -345,7 +399,18 @@
         
     }
 
+    function changekirim() {
+        let kode = $('#kirim').val();
+        let label= $('#kirim option:selected').html();
+        if ((kode == 'GX0002') || (label == 'kurir')) {
+          $('.box-kurir').removeClass('invisible');
+        } else {
+          $('.box-kurir').addClass('invisible');
+        }
+      }
+
     function getbank() {
+        $(`#bank`).attr('readonly', true);
         $.ajax({
 	        url: `<?php echo base_url() ?>billing/getbank`,
 	        type: "GET",
@@ -361,6 +426,43 @@
 	        }
 	    });
     }
+
+    function getlayanan() {
+        $(`#layanan`).attr('readonly', true);
+        $.ajax({
+            url: `<?php echo base_url() ?>billing/getlayanan`,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data) {
+                let arr = data;
+                getselect('#layanan', 'kelaslayanan', 'kode', 'nama',arr)
+                $(`#layanan`).attr('readonly', false);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Error on process');
+                $(`#bank`).attr('readonly', false);
+            }
+        });
+    }
+
+    function getkirim() {
+        $(`#kirim`).attr('readonly', true);
+        $.ajax({
+            url: `<?php echo base_url() ?>billing/getkirim`,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data) {
+                let arr = data;
+                getselect('#kirim', 'kelaskirim', 'kode', 'nama',arr)
+                $(`#kirim`).attr('readonly', false);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Error on process');
+                $(`#kirim`).attr('readonly', false);
+            }
+        });
+    }
+
 
     function getprov() {
 	    $(`#provinsi`).attr('readonly', true);
@@ -378,6 +480,14 @@
                 $(`#provinsi`).attr('readonly', false);
 	        }
 	    });
+    }
+
+    function changecity(){
+        $('#biaya').val('')
+        $('#kurir').val('')
+        $('#kodekurir').val('')
+        $('#service').val('')
+        $('.kelasservice').remove('')
     }
 
     function getcity() {
