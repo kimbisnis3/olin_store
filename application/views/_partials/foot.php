@@ -1,13 +1,21 @@
 <!--information-starts-->
+<?php 
+	$desc  	= $this->db->get_where('tconfigtext', array('tipe' => 'elfoot_ket'))->row();
+	$hp  	= $this->db->get_where('tconfigtext', array('tipe' => 'elfoot_hp'))->row();
+	$email  = $this->db->get_where('tconfigtext', array('tipe' => 'elfoot_email'))->row();
+	$fb  	= $this->db->get_where('tconfigtext', array('tipe' => 'socmed_fb'))->row();
+	$tw  	= $this->db->get_where('tconfigtext', array('tipe' => 'socmed_tw'))->row();
+	$go  	= $this->db->get_where('tconfigtext', array('tipe' => 'socmed_go'))->row();
+ ?>
 <div class="information">
 		<div class="container">
 			<div class="infor-top">
 				<div class="col-md-3 infor-left">
 					<h3>Follow Us</h3>
 					<ul>
-						<li><a href="#"><span class="fb"></span><h6>Facebook</h6></a></li>
-						<li><a href="#"><span class="twit"></span><h6>Twitter</h6></a></li>
-						<li><a href="#"><span class="google"></span><h6>Google+</h6></a></li>
+						<li><a href="<?php echo prep_url($fb->link) ?>"><span class="fb"></span><h6>Facebook</h6></a></li>
+						<li><a href="<?php echo prep_url($tw->link) ?>"><span class="twit"></span><h6>Twitter</h6></a></li>
+						<li><a href="<?php echo prep_url($go->link) ?>"><span class="google"></span><h6>Google+</h6></a></li>
 					</ul>
 				</div>
 				<div class="col-md-3 infor-left">
@@ -33,11 +41,9 @@
 				</div>
 				<div class="col-md-3 infor-left">
 					<h3>Store Information</h3>
-					<h4>The company name,
-						<span>Lorem ipsum dolor,</span>
-						Glasglow Dr 40 Fe 72.</h4>
-					<h5>+955 123 4567</h5>	
-					<p><a href="mailto:example@email.com">contact@example.com</a></p>
+					<h4><?php echo $desc->teks; ?></h4>
+					<h5><?php echo $hp->teks; ?></h5>	
+					<p><a href="mailto:example@email.com"><?php echo $email->teks; ?></a></p>
 				</div>
 				<div class="clearfix"></div>
 			</div>

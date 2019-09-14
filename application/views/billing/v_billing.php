@@ -69,7 +69,6 @@
                 <!-- <div class="col-md-2"></div> -->
             </div>
         </div>
-
         <div class="container step step-2">
             <div class="row">
                 <div class="col-md-2"></div>
@@ -141,7 +140,7 @@
                 </div>
                 <div class="col-md-2"></div>
             </div>
-            <div class="row">
+            <div class="row invisible">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <div class="row" style="margin-bottom: 20px !important;">
@@ -173,6 +172,12 @@
                             <select class="form-control" name="bank" id="bank">
                                 <option value="">-</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 20px !important;">
+                        <div class="col-md-12">
+                            <label for="">Keterangan Pengiriman</label>
+                            <textarea class="form-control" name="ket" id="ket" rows="4"></textarea>
                         </div>
                     </div>
                 </div>
@@ -222,14 +227,20 @@
         </div>
         <div class="container step step-5">
             <!-- page konfimasi, kode unik  -->
-            <button class="btn btn-hijau btn-md btn-flat" onclick="savedata()"><i class="fa fa-check"></i> Konfirmasi</button>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <button class="btn btn-block btn-hijau btn-md btn-konfirmasi" onclick="savedata()"><i class="fa fa-check"></i> Konfirmasi Pesanan ?</button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
         </div>
         <div class="containter btn-step" style="margin-top: 25px !important;">
             <div class="ckeck-top heading">
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-md btn-hijau btn-flat btn-prev" onclick="prev_page()"><i class="fa fa-arrow-left"></i> Sebelumnya</button>
-                        <button type="button" class="btn btn-md btn-hijau btn-flat btn-next" onclick="next_page()">Selanjutnya <i class="fa fa-arrow-right"></i></button>
+                        <button type="button" class="btn btn-md btn-merah btn-prev" onclick="prev_page()"><i class="fa fa-arrow-left"></i> Sebelumnya</button>
+                        <button type="button" class="btn btn-md btn-teal btn-next" onclick="next_page()">Selanjutnya <i class="fa fa-arrow-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -273,6 +284,7 @@
     }
 
     function savedata(){
+        btnproc('.btn-konfirmasi',1)
         $.ajax({
 	        url: `<?php echo base_url() ?>order/savedata`,
 	        type: "POST",
@@ -290,13 +302,30 @@
                 bykirim         : $('[name="biaya"]').val(),
                 kodekurir       : $('[name="kodekurir"]').val(),
                 kurir           : $('[name="kurir"]').val(),
+                ref_kirim       : $('[name="kirim"]').val(),
+                ref_layanan     : $('[name="layanan"]').val(),
+                ket             : $('[name="ket"]').val(),
                 // arr_produk      : arr_barang.content
             },
 	        success: function(data) {
-                console.log('sukses')
+                if (data.sukses == 'success') {
+                    console.log('sukses')
+                    showNotif('Sukses', 'Pesanan Berhasil Dilakukan, Segera Masukan Data Pembayaran', 'success')
+                    btnproc('.btn-konfirmasi',0)
+                    setTimeout(function(){ 
+                        location.href = '<?php echo base_url() ?>payment';
+                    }, 2000);
+
+                } else {
+                    showNotif('Error', 'Internal Error', 'danger')
+                    btnproc('.btn-konfirmasi',0)
+                }
+                
 	        },
 	        error: function(jqXHR, textStatus, errorThrown) {
                 console.log('Error on process');
+                showNotif('Error', 'Internal Error', 'danger')
+                btnproc('.btn-konfirmasi',0)
 	        }
 	    });
     }

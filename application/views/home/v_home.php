@@ -46,32 +46,31 @@
 	<div class="about"> 
 		<div class="container">
 			<div class="about-top grid-1">
-				<div class="col-md-4 about-left">
-					<figure class="effect-bubba">
-						<img class="img-responsive" src="<?php echo base_url() ?>assets/images/abt-1.jpg" alt=""/>
-						<figcaption>
-							<h2>Nulla maximus nunc</h2>
-							<p>In sit amet sapien eros Integer dolore magna aliqua</p>	
-						</figcaption>			
-					</figure>
+				<div class="col-md-2 about-left">
 				</div>
 				<div class="col-md-4 about-left">
-					<figure class="effect-bubba">
-						<img class="img-responsive" src="<?php echo base_url() ?>assets/images/abt-2.jpg" alt=""/>
-						<figcaption>
-							<h4>Mauris erat augue</h4>
-							<p>In sit amet sapien eros Integer dolore magna aliqua</p>	
-						</figcaption>			
-					</figure>
+					<a href="<?php echo base_url() ?>product">
+						<figure class="effect-bubba">
+							<img class="img-responsive" src="<?php echo base_url() ?>assets/images/abt-1.jpg" alt=""/>
+							<figcaption>
+								<h2>Produk</h2>
+								<p>Daftar produk-produk terbaik dari kami</p>	
+							</figcaption>			
+						</figure>
+					</a>
 				</div>
 				<div class="col-md-4 about-left">
-					<figure class="effect-bubba">
-						<img class="img-responsive" src="<?php echo base_url() ?>assets/images/abt-3.jpg" alt=""/>
-						<figcaption>
-							<h4>Cras elit mauris</h4>
-							<p>In sit amet sapien eros Integer dolore magna aliqua</p>	
-						</figcaption>			
-					</figure>
+					<a href="<?php echo base_url() ?>custom">
+						<figure class="effect-bubba">
+							<img class="img-responsive" src="<?php echo base_url() ?>assets/images/abt-2.jpg" alt=""/>
+							<figcaption>
+								<h4>Produk Custom</h4>
+								<p>Rancang sendiri design produk sesuai keinginan anda</p>	
+							</figcaption>			
+						</figure>
+					</a>
+				</div>
+				<div class="col-md-2 about-left">
 				</div>
 				<div class="clearfix"></div>
 			</div>

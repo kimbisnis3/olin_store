@@ -1,3 +1,6 @@
+<?php 
+	$title = $this->db->get_where('tconfigtext', array('tipe' => 'eltitle'))->row();
+ ?>
 <div class="top-header">
 	<div class="container">
 		<div class="top-header-main">
@@ -21,7 +24,7 @@
 </div>
 <div class="logo">
 	<a href="<?php echo base_url() ?>">
-		<h1 class="hue">Olin Store</h1>
+		<h1 class="hue"><?php echo $title->teks; ?></h1>
 	</a>
 </div>
 <div class="header-bottom">

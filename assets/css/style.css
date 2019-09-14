@@ -536,7 +536,7 @@ ul.callbacks_tabs.callbacks2_tabs {
 	height: 100%;
 }
 figure.effect-bubba {
-	background: rgba(6, 107, 195, 0.85);
+	background: #E03997;
 }
 figure.effect-bubba:hover img {
 	opacity: 0.3;
