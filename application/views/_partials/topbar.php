@@ -48,7 +48,7 @@
 										<div class="row">
 											<div class="col1 me-one"><h4>Member</h4>
 												<ul>
-													<li><a href="'.base_url().'history">Pesanan</a></li>
+													<li><a href="'.base_url().'order">Pesanan</a></li>
 													<li><a href="'.base_url().'payment">Pembayaran</a></li>
 													<li><a href="'.base_url().'login/logout">Sign Out</a></li>
 												</ul>

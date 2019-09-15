@@ -147,16 +147,16 @@
 	}
 
 	function login() {
-		if ($('[name="user"]').val() == '' || $('[name="user"]').val() == null) {
-			$('[name="user"]').focus()
-			showNotif('Perhatian', 'Lengkapi Data', 'warning')
-			return false
-		}
-		if ($('[name="pass"]').val() == '' || $('[name="pass"]').val() == null) {
-			$('[name="pass"]').focus()
-			showNotif('Perhatian', 'Lengkapi Data', 'warning')
-			return false
-		}
+		// if ($('[name="user"]').val() == '' || $('[name="user"]').val() == null) {
+		// 	$('[name="user"]').focus()
+		// 	showNotif('Perhatian', 'Lengkapi Data', 'warning')
+		// 	return false
+		// }
+		// if ($('[name="pass"]').val() == '' || $('[name="pass"]').val() == null) {
+		// 	$('[name="pass"]').focus()
+		// 	showNotif('Perhatian', 'Lengkapi Data', 'warning')
+		// 	return false
+		// }
 		$('[name="user"]').prop('readonly', true)
 		$('[name="pass"]').prop('readonly', true)
 		btnproc('#btn-sign-in', 1)
@@ -189,16 +189,16 @@
 	}
 
 	function login_cart(tipe) {
-		if ($('[name="user"]').val() == '' || $('[name="user"]').val() == null) {
-			$('[name="user"]').focus()
-			showNotif('Perhatian', 'Lengkapi Data', 'warning')
-			return false
-		}
-		if ($('[name="pass"]').val() == '' || $('[name="pass"]').val() == null) {
-			$('[name="pass"]').focus()
-			showNotif('Perhatian', 'Lengkapi Data', 'warning')
-			return false
-		}
+		// if ($('[name="user"]').val() == '' || $('[name="user"]').val() == null) {
+		// 	$('[name="user"]').focus()
+		// 	showNotif('Perhatian', 'Lengkapi Data', 'warning')
+		// 	return false
+		// }
+		// if ($('[name="pass"]').val() == '' || $('[name="pass"]').val() == null) {
+		// 	$('[name="pass"]').focus()
+		// 	showNotif('Perhatian', 'Lengkapi Data', 'warning')
+		// 	return false
+		// }
 		$('[name="user"]').prop('readonly', true)
 		$('[name="pass"]').prop('readonly', true)
 		btnproc('#btn-sign-in', 1)

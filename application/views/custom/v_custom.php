@@ -15,7 +15,7 @@
     </div>
     <div class="konten">
         <div class="container">
-            <iframe src="<?php echo prep_url('http://localhost/lumise/editor.php?product=2') ?>" height="600px" width="100%" style="margin-top : 25px !important;"></iframe>
+            <iframe src="<?php echo prep_url('http://demo.gongsoft.com/plugin/customdesign/editor.php?product=10') ?>" height="600px" width="100%" style="margin-top : 25px !important;"></iframe>
         </div>
     </div>
     <?php $this->load->view('_partials/foot.php'); ?>

@@ -16,12 +16,13 @@ class Order extends CI_Controller
 
     function index()
     {
-        $this->load->view($this->indexpage);
+        $data['menuaktif'] = $this->menuaktif;
+        $this->load->view($this->indexpage,$data);
     }
 
     public function getall(){
         $filterawal = date('Y-m-d', strtotime($this->input->post('filterawal')));
-        $filterakhir= date('Y-m-d', strtotime($this->input->post('filterakhir')));
+        $filterakhir = date('Y-m-d', strtotime($this->input->post('filterakhir')));
         $kodecust   = $this->session->userdata('kodecust');
         $q = "SELECT
                 xorder.id,
@@ -50,16 +51,17 @@ class Order extends CI_Controller
             LEFT JOIN mcustomer ON mcustomer.kode = xorder.ref_cust
             LEFT JOIN mkirim ON mkirim.kode = xorder.ref_kirim
             LEFT JOIN mlayanan ON mlayanan.kode = xorder.ref_layanan
-            WHERE xorder.void IS NOT TRUE";
-        if ($filterawal && $filterakhir) {
-            $q .= "  AND
-                    xorder.tgl 
-                BETWEEN '$filterawal' AND '$filterakhir'";
-        }
-
+            WHERE xorder.void IS NOT TRUE
+            ";
         if ($kodecust) {
             $q .= " AND ref_cust = '$kodecust'";
         }
+        // if ($filterawal || $filterakhir) {
+        //     $q .= " AND
+        //         xorder.tgl 
+        //     BETWEEN '$filterawal' AND '$filterakhir'";
+        // }
+        
         $q .=" ORDER BY xorder.id DESC" ;
         $result     = $this->db->query($q)->result();
         $list       = [];
@@ -79,13 +81,126 @@ class Order extends CI_Controller
             $row['pathimage']   = $r->pathimage;
             $row['kirimke']     = $r->kirimke;
             $row['mlayanan_nama']= $r->mlayanan_nama;
-            $row['status']      = statuspo($r->status);
+            // $row['status']      = statuspo($r->status);
             $row['jmlorder']    = $r->jmlorder;
             $row['orderdone']   = $r->orderdone;
             $row['statusorder'] = ($r->orderdone == $r->jmlorder) ? '<span class="label label-success">Selesai Semua</span>' : '<span class="label label-warning">Belum Selesai</span>' ;
             $list[] = $row;
         }   
         echo json_encode(array('data' => $list));
+    }
+
+    public function getdetail()
+    {
+        $xorderkode = $this->input->post('xorderkode');
+        $q = "SELECT
+                mbarang.id,
+                mbarang.kode,
+                mbarang.nama,
+                mbarang.ket,
+                msatbrg.id idsatbarang,
+                msatbrg.konv,
+                msatbrg.ket ketsat,
+                msatbrg.harga,
+                msatbrg.ref_brg,
+                msatbrg.ref_sat,
+                msatuan.nama satuan,
+                mgudang.nama gudang,
+                xorderd.jumlah,
+                xorderd.statusd,
+                xorderd.jumlah * xorderd.harga subtotal
+            FROM
+                xorderd
+            LEFT JOIN mbarang ON mbarang.kode = xorderd.ref_brg
+            LEFT JOIN msatbrg ON msatbrg.kode = xorderd.ref_satbrg
+            LEFT JOIN msatuan ON msatuan.kode = msatbrg.ref_sat
+            LEFT JOIN mgudang ON mgudang.kode = msatbrg.ref_gud
+            WHERE xorderd.ref_order = '$xorderkode'";
+        $brg     = $this->db->query($q)->result();
+
+        $p ="SELECT
+                xorderds.id,
+                xorderds.ket,
+                mbarang.nama,
+                mmodesign.nama mmodesign_nama,
+                mmodesign.gambar mmodesign_gambar,
+                mwarna.nama mwarna_nama,
+                mwarna.colorc mwarna_colorc
+            FROM
+                xorderds
+            LEFT JOIN mmodesign ON mmodesign.kode = xorderds.ref_modesign
+            LEFT JOIN mwarna ON mwarna.kode = xorderds.ref_warna
+            LEFT JOIN xorderd ON xorderd. ID = xorderds.ref_orderd
+            LEFT JOIN mbarang ON mbarang.kode = xorderd.ref_brg
+            LEFT JOIN xorder ON xorder.kode = xorderd.ref_order
+            WHERE xorder.kode = '$xorderkode'";
+        $spek    = $this->db->query($p)->result();
+        $tabs   = '<div class="nav-tabs-custom fadeIn animated">
+                  <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_1" data-toggle="tab">Data Produk</a></li>
+                    <li><a href="#tab_2" data-toggle="tab">Data Spesifikasi</a></li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">';
+        $tabs   .= '<table class="table-custom">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kode</th>
+                            <th>Produk</th>
+                            <th>Jumlah</th>
+                            <th>Satuan</th>
+                            <th>Harga</th>
+                            <th>Subtotal</th>
+                            <th>Keterangan</th>
+                        </tr>
+                        <thead>';
+        foreach ($brg as $i => $r) {
+            $tabs    .= '<tbody>
+                        <tr>
+                            <td>'.($i + 1).'.</td>
+                            <td>'.$r->kode.'</td>
+                            <td>'.$r->nama.'</td>
+                            <td>'.$r->jumlah.'</td>
+                            <td>'.$r->satuan.'</td>
+                            <td>'.number_format($r->harga).'</td>
+                            <td>'.number_format($r->subtotal).'</td>
+                            <td>'.$r->ket.'</td>
+                        </tr>
+                        </tbody>';
+        }       
+        $tabs .= '</table>';       
+        $tabs .=    '</div>
+                    <div class="tab-pane" id="tab_2">';
+
+        $tabs   .= '<table class="table-custom">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Produk</th>
+                            <th>Nama Spesifikasi</th>
+                            <th>Gambar</th>
+                            <th>Nama Warna</th>
+                            <th>Warna</th>
+                        </tr>
+                        <thead>';
+        foreach ($spek as $i => $r) {
+            $tabs    .= '<tbody>
+                        <tr>
+                            <td>'.($i + 1).'.</td>
+                            <td>'.$r->nama.'</td>
+                            <td>'.$r->mmodesign_nama.'</td>
+                            <td>'.showimage(str_replace('/agen/','',$r->mmodesign_gambar)).'</td>
+                            <td>'.$r->mwarna_nama.'</td>
+                            <td><div style="witdh:10px; height:20px; background-color:'.$r->mwarna_colorc.'" ></div></td>
+                        </tr>
+                        </tbody>';
+        }
+        $tabs .= '</table>';              
+        $tabs .='   </div>
+                  </div>
+                </div>';
+        echo $tabs;
     }
 
     public function savedata()

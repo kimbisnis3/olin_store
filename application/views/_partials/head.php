@@ -40,8 +40,16 @@
     </script>
     <style>
     .selected {
-        background-color: #008B8B !important;
+        background-color: #00B5AD !important;
         color: #ffffff !important;
+    }
+    td.details-control {
+        background: url('<?php echo base_url(); ?>assets/details_open.png') no-repeat center center !important;
+            cursor: pointer  !important;
+    }
+
+    tr.shown td.details-control {
+        background: url('<?php echo base_url(); ?>assets/details_close.png') no-repeat center center !important;
     }
     </style>		
 </head>
