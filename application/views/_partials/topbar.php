@@ -36,7 +36,7 @@
 						<li class="grid menu-home"><a href="<?php echo base_url()?>">Home</a></li>
 						<li class="grid menu-produk"><a href="<?php echo base_url()?>product">Produk</a></li>
 						<li class="grid menu-custom"><a href="<?php echo base_url()?>custom">Custom</a></li>
-						<li class="grid menu-profil"><a href="<?php echo base_url()?>profil">Profile</a></li>
+						<li class="grid menu-profil"><a href="<?php echo base_url()?>aboutus">About Us</a></li>
 						<li class="grid menu-kontak"><a href="<?php echo base_url()?>kontak">Contact</a></li>
 						
 						<?php

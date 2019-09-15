@@ -17,6 +17,9 @@ class Home extends CI_Controller
     function index()
     {
         $data['slide']  = $this->db->get_where('tconfigimage', array('tipe' => 'ss'))->result();
+        $data['gd1']  = $this->db->get_where('tconfigimage', array('tipe' => 'gd1'))->row();
+        $data['gd2']  = $this->db->get_where('tconfigimage', array('tipe' => 'gd2'))->row();
+
         $q = "SELECT
                 msatbrg. ID,
                 msatbrg.konv,

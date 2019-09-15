@@ -51,7 +51,7 @@
 				<div class="col-md-4 about-left">
 					<a href="<?php echo base_url() ?>product">
 						<figure class="effect-bubba">
-							<img class="img-responsive" src="<?php echo base_url() ?>assets/images/abt-1.jpg" alt=""/>
+							<img class="img-responsive" src="<?php echo prep_url(api_url()).$gd1->image ?>" alt=""/>
 							<figcaption>
 								<h2>Produk</h2>
 								<p>Daftar produk-produk terbaik dari kami</p>	
@@ -62,7 +62,7 @@
 				<div class="col-md-4 about-left">
 					<a href="<?php echo base_url() ?>custom">
 						<figure class="effect-bubba">
-							<img class="img-responsive" src="<?php echo base_url() ?>assets/images/abt-2.jpg" alt=""/>
+							<img class="img-responsive" src="<?php echo prep_url(api_url()).$gd2->image ?>" alt=""/>
 							<figcaption>
 								<h4>Produk Custom</h4>
 								<p>Rancang sendiri design produk sesuai keinginan anda</p>	
@@ -82,7 +82,6 @@
 		<div class="container">
 			<div class="product-top">
 				<div class="product-one">
-					<!-- foreach disini -->
 					<?php foreach ($produk as $i => $v): ?>
 					<div class="col-md-3 product-left p-left" style="margin-bottom : 50px !important;">
                             <div class="product-main simpleCart_shelfItem">
@@ -90,8 +89,6 @@
                                 <div class="product-bottom">
                                     <h3><?php echo $v->namabarang ?></h3>
                                     <p>Explore Now</p>
-									<!-- <h4 class="pointer" onclick="add_cart('<?php echo $v->kodebarang ?>')"><a class="item_add"><i></i></a> <span class=" item_price">Rp. <?php echo number_format($v->harga) ?></span></h4>
-								 -->
 								 	<h4 class="pointer"><a href="<?php echo base_url() ?>product/detail?q=<?php echo $v->kodebarang ?>" class="item_add"><i></i></a> <span class=" item_price">Rp. <?php echo number_format($v->harga) ?></span></h4>
                                 </div>
                             </div>

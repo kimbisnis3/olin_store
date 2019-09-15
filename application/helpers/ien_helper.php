@@ -13,7 +13,8 @@ if (!function_exists('status')) {
     }
 
     function api_url() {
-        return 'https://mkj.olinbags.com/agen/';
+        // return 'https://mkj.olinbags.com/agen/';
+        return 'localhost/olin/agen/';
     }
 
     function ien($text)
