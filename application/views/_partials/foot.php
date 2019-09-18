@@ -7,6 +7,11 @@
 	$tw  	= $this->db->get_where('tconfigtext', array('tipe' => 'socmed_tw'))->row();
 	$go  	= $this->db->get_where('tconfigtext', array('tipe' => 'socmed_go'))->row();
  ?>
+ <style type="text/css">
+ 	.link-foot {
+ 		color: #999 !important;
+ 	}
+ </style>
 <div class="information">
 		<div class="container">
 			<div class="infor-top">
@@ -20,23 +25,26 @@
 				</div>
 				<div class="col-md-3 infor-left">
 					<h3>Information</h3>
-					<ul>
-						<li><a href="#"><p>Specials</p></a></li>
-						<li><a href="#"><p>New Products</p></a></li>
-						<li><a href="#"><p>Our Stores</p></a></li>
-						<li><a href="contact.html"><p>Contact Us</p></a></li>
-						<li><a href="#"><p>Top Sellers</p></a></li>
-						<li><a href="#"><p>Top Sellers</p></a></li>
+					<ul class="link-foot">
+						<li><a class="link-foot" href="<?php echo base_url()?>">Home</a></li>
+						<li><a class="link-foot" href="<?php echo base_url()?>product">Produk</a></li>
+						<li><a class="link-foot" href="<?php echo base_url()?>custom">Custom</a></li>
+						<li><a class="link-foot" href="<?php echo base_url()?>aboutus">About Us</a></li>
+						<li><a class="link-foot" href="<?php echo base_url()?>contactus">Contact</a></li>
 					</ul>
 				</div>
 				<div class="col-md-3 infor-left">
 					<h3>My Account</h3>
 					<ul>
-						<li><a href="account.html"><p>My Account</p></a></li>
-						<li><a href="#"><p>My Credit slips</p></a></li>
-						<li><a href="#"><p>My Merchandise returns</p></a></li>
-						<li><a href="#"><p>My Personal info</p></a></li>
-						<li><a href="#"><p><?php $this->session->userdata('nama')?></p></a></li>
+						<?php if ($this->session->userdata('in') == TRUE): ?>
+							<li><a class="link-foot" href="<?php echo base_url() ?>order">Pesanan</a></li>
+							<li><a class="link-foot" href="<?php echo base_url() ?>payment">Pembayaran</a></li>
+							<li><a class="link-foot" href="<?php echo base_url() ?>login/logout">Sign Out</a></li>
+						<?php else: ?>
+							<li><a class="link-foot pointer" onclick="login_modal()">Login</a></li>
+							<li><a class="link-foot" href="<?php echo base_url() ?>register">Register</a></li>
+						<?php endif ?>
+						
 					</ul>
 				</div>
 				<div class="col-md-3 infor-left">
