@@ -51,5 +51,8 @@
     tr.shown td.details-control {
         background: url('<?php echo base_url(); ?>assets/details_close.png') no-repeat center center !important;
     }
+    .img-item {
+        height: 25vh;
+    }
     </style>		
 </head>

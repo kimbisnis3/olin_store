@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html>
 <?php $this->load->view('_partials/head.php'); ?>
+<style type="text/css">
+	.img-option {
+        height: 40vh !important;
+    }
+    .img-slide {
+        height: 60vh !important;
+    }
+</style>
 <body class="fadeIn animated"> 
 	<?php $this->load->view('_partials/topbar.php'); ?>
-	<!--banner-starts-->
 	<div class="bnr" id="home">
 		<div  id="top" class="callbacks_container">
 			<ul class="rslides" id="slider4">
             <?php foreach ($slide as $i => $v): ?>
 			<li>
-				<img onerror="imgError(this)" src="<?php echo prep_url(api_url()).$v->image ?>" alt=""/>
-				<!-- <img src="<?php echo prep_url(api_url().$v->image) ?>" alt=""/> -->
+				<img class="img-slide" onerror="imgError(this)" src="<?php echo prep_url(api_url()).$v->image ?>" alt=""/>
 			</li>
             <?php endforeach; ?>
 			    
@@ -18,31 +24,24 @@
 		</div>
 		<div class="clearfix"> </div>
 	</div>
-	<!--banner-ends--> 
-	<!--Slider-Starts-Here-->
-				<script src="<?php echo base_url() ?>assets/js/responsiveslides.min.js"></script>
-			 <script>
-			    // You can also use "$(window).load(function() {"
-			    $(function () {
-			      // Slideshow 4
-			      $("#slider4").responsiveSlides({
-			        auto: true,
-			        pager: true,
-			        nav: true,
-			        speed: 500,
-			        namespace: "callbacks",
-			        before: function () {
-			          $('.events').append("<li>before event fired.</li>");
-			        },
-			        after: function () {
-			          $('.events').append("<li>after event fired.</li>");
-			        }
-			      });
-			
-			    });
-			  </script>
-			<!--End-slider-script-->
-	<!--about-starts-->
+	<script src="<?php echo base_url() ?>assets/js/responsiveslides.min.js"></script>
+	<script>
+	$(function() {
+	    $("#slider4").responsiveSlides({
+	        auto: true,
+	        pager: true,
+	        nav: true,
+	        speed: 500,
+	        namespace: "callbacks",
+	        before: function() {
+	            $('.events').append("<li>before event fired.</li>");
+	        },
+	        after: function() {
+	            $('.events').append("<li>after event fired.</li>");
+	        }
+	    });
+	});
+	</script>
 	<div class="about"> 
 		<div class="container">
 			<div class="about-top grid-1">
@@ -51,7 +50,7 @@
 				<div class="col-md-4 about-left">
 					<a href="<?php echo base_url() ?>product">
 						<figure class="effect-bubba">
-							<img class="img-responsive" src="<?php echo prep_url(api_url()).$gd1->image ?>" alt=""/>
+							<img class="img-responsive img-option" src="<?php echo prep_url(api_url()).$gd1->image ?>" alt=""/>
 							<figcaption>
 								<h2>Produk</h2>
 								<p>Daftar produk-produk terbaik dari kami</p>	
@@ -62,7 +61,7 @@
 				<div class="col-md-4 about-left">
 					<a href="<?php echo base_url() ?>custom">
 						<figure class="effect-bubba">
-							<img class="img-responsive" src="<?php echo prep_url(api_url()).$gd2->image ?>" alt=""/>
+							<img class="img-responsive img-option" src="<?php echo prep_url(api_url()).$gd2->image ?>" alt=""/>
 							<figcaption>
 								<h4>Produk Custom</h4>
 								<p>Rancang sendiri design produk sesuai keinginan anda</p>	
@@ -76,8 +75,6 @@
 			</div>
 		</div>
 	</div>
-	<!--about-end-->
-	<!--product-starts-->
 	<div class="product"> 
 		<div class="container">
 			<div class="product-top">
@@ -85,7 +82,7 @@
 					<?php foreach ($produk as $i => $v): ?>
 					<div class="col-md-3 product-left p-left" style="margin-bottom : 50px !important;">
                             <div class="product-main simpleCart_shelfItem">
-                                <a href="<?php echo base_url() ?>product/detail?q=<?php echo $v->kodebarang ?>" class="mask"><img onerror='imgError(this)' class="img-responsive zoom-img" src="<?php echo prep_url(api_url()).$v->gambardesign ?>" alt="" /></a>
+                                <a href="<?php echo base_url() ?>product/detail?q=<?php echo $v->kodebarang ?>" class="mask"><img onerror='imgError(this)' class="img-responsive zoom-img img-item" src="<?php echo prep_url(api_url()).$v->gambardesign ?>" alt="" /></a>
                                 <div class="product-bottom">
                                     <h3><?php echo $v->namabarang ?></h3>
                                     <p>Explore Now</p>
@@ -105,7 +102,6 @@
 			</div>
 		</div>
 	</div>
-	<!--product-end-->
 	<?php $this->load->view('_partials/foot.php'); ?>
 </body>
 </html>

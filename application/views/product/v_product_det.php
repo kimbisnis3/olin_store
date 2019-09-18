@@ -26,10 +26,8 @@
 								</li>
 							  </ul>
 						</div>
-						<!-- FlexSlider -->
 
 						<script>
-						// Can also be used with $(document).ready()
 						$(window).load(function() {
 						  $('.flexslider').flexslider({
 							animation: "slide",
@@ -55,14 +53,6 @@
 							<h5 class="item_price">Rp. <?php echo number_format($pr->harga) ?></h5>
 							<p>Keterangan : <?php echo $pr->ketbarang ?></p>
 							<p>Warna : <?php echo $pr->warna ?></p>
-							
-							<!-- <ul class="tag-men">
-								<li><span>TAG</span>
-								<span class="women1">: Women,</span></li>
-								<li><span>SKU</span>
-								<span class="women1">: CK09</span></li>
-							</ul> -->
-							<!-- <a type="button" class="add-cart item_add pointer" onclick="add_cart('<?php echo $pr->kodebarang ?>')"><i class="fa fa-shopping-cart"></i> ADD TO CART</a> -->
 							<button type="button" class="btn btn-hitam btn-lg btn-flat" id="btn-add-cart" onclick="add_cart('<?php echo $pr->kodebarang ?>')"><i class="fa fa-shopping-cart"></i> ADD TO CART</button>
 							
 						</div>
@@ -74,16 +64,12 @@
 					<?php foreach ($pr_latest as $i => $v): ?>
 						<div class="col-md-4 product-left p-left"> 
 							<div class="product-main simpleCart_shelfItem">
-								<a href="<?php echo base_url() ?>product/detail?q=<?php echo $v->kodebarang ?>" class="mask"><img onerror='imgError(this)'  class="img-responsive zoom-img" src="<?php echo prep_url(api_url()).$v->gambardesign ?>" alt="" /></a>
+								<a href="<?php echo base_url() ?>product/detail?q=<?php echo $v->kodebarang ?>" class="mask"><img onerror='imgError(this)'  class="img-responsive zoom-img img-item" src="<?php echo prep_url(api_url()).$v->gambardesign ?>" alt="" /></a>
 								<div class="product-bottom">
 									<h3><?php echo $v->namabarang ?></h3>
 									<p>Explore Now</p>
-									<!-- <h4 class="pointer" onclick="add_cart('<?php echo $v->kodebarang ?>')"><a class="item_add"><i></i></a> <span class=" item_price">Rp. <?php echo number_format($v->harga) ?></span></h4> -->
 									<h4 class="pointer"><a href="<?php echo base_url() ?>product/detail?q=<?php echo $v->kodebarang ?>" class="item_add"><i></i></a> <span class=" item_price">Rp. <?php echo number_format($v->harga) ?></span></h4>
 								</div>
-								<!-- <div class="srch">
-									<span>-50%</span>
-								</div> -->
 							</div>
 						</div>
 					<?php endforeach; ?>

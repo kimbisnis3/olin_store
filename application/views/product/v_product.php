@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
 <?php $this->load->view('_partials/head.php'); ?>
-
 <body class="fadeIn animated">
     <?php $this->load->view('_partials/topbar.php'); ?>
-    <!--start-breadcrumbs-->
     <div class="breadcrumbs">
         <div class="container">
             <div class="breadcrumbs-main">
@@ -15,8 +13,6 @@
             </div>
         </div>
     </div>
-    <!--end-breadcrumbs-->
-    <!--prdt-starts-->
     <div class="prdt">
         <div class="container">
             <div class="ckeck-top heading">
@@ -28,16 +24,12 @@
                     <?php foreach ($product as $i => $v): ?>
                         <div class="col-md-3 product-left p-left" style="margin-bottom : 50px !important;">
                             <div class="product-main simpleCart_shelfItem">
-                                <a href="<?php echo base_url() ?>product/detail?q=<?php echo $v->kodebarang ?>" class="mask"><img onerror='imgError(this)' class="img-responsive zoom-img" src="<?php echo prep_url(api_url()).$v->gambardesign ?>" alt="" /></a>
+                                <a href="<?php echo base_url() ?>product/detail?q=<?php echo $v->kodebarang ?>" class="mask"><img onerror='imgError(this)' class="img-responsive zoom-img img-item" src="<?php echo prep_url(api_url()).$v->gambardesign ?>" alt="" /></a>
                                 <div class="product-bottom">
                                     <h3><?php echo $v->namabarang ?></h3>
                                     <p>Explore Now</p>
-                                    <!-- <h4 class="pointer" onclick="add_cart('<?php echo $v->kodebarang ?>')"><a class="item_add"><i></i></a> <span class=" item_price">Rp. <?php echo number_format($v->harga) ?></span></h4> -->
                                     <h4 class="pointer"><a href="<?php echo base_url() ?>product/detail?q=<?php echo $v->kodebarang ?>" class="item_add"><i></i></a> <span class=" item_price">Rp. <?php echo number_format($v->harga) ?></span></h4>
                                 </div>
-                                <!-- <div class="srch srch1">
-                                    <span>-50%</span>
-                                </div> -->
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -48,12 +40,10 @@
             </div>
         </div>
     </div>
-    <!--product-end-->
     <?php $this->load->view('_partials/foot.php'); ?>
 </body>
 <script>
     function add_cart(kode) {
-        // console.log(kode)
         $.ajax({
           url: `<?php echo base_url() ?>cart/add`,
           type: "POST",
